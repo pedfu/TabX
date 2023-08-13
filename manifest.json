@@ -1,0 +1,22 @@
+{
+    "name": "TabX",
+    "version": "1.0.0",
+    "description": "New customized chrome tab",
+    "permissions": ["storage", "tabs", "activeTab"],
+    "chrome_url_overrides": {
+      "newtab": "newtab.html"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_icon": {
+        "16": "assets/ext-icon.png",
+        "24": "assets/ext-icon.png",
+        "32": "assets/ext-icon.png"
+      },
+      "default_title": "TabX",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+}
