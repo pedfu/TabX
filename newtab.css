@@ -1,0 +1,36 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* HEADER */
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.profile, .middleNav, .otherInfos {
+    width: 30%;
+    padding: 10px;
+    display: flex;
+}
+
+.profile {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+.profile img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.middleNav {
+    justify-content: center;
+}
+
+.otherInfos {
+    justify-content: flex-end;
+}
