@@ -4,15 +4,33 @@ body {
     padding: 0;
 }
 
+/* avoid click and drag or select text */
+img {
+  -webkit-user-drag: none;
+  -khtml-user-drag: none;
+  -moz-user-drag: none;
+  -o-user-drag: none;
+  user-drag: none;
+}
+p, h1, h2, h3, h4, h5, h6, span, img {
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.dragging {
+    pointer-events: none;
+}
+
 /* HEADER */
 header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .profile, .middleNav, .otherInfos {
     width: 30%;
-    padding: 10px;
+    padding: 10px 20px;
     display: flex;
 }
 
@@ -27,8 +45,51 @@ header {
     border-radius: 50%;
 }
 
-.middleNav {
+/* CONTENT */
+main {
     justify-content: center;
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.carousel-content {
+    overflow-y: hidden;
+    overflow-x: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+}
+.carousel-content::-webkit-scrollbar {
+    display: none;
+}
+
+.items {
+
+}
+.items ul {
+    display: flex;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.items ul li {
+   position: relative; 
+}
+.items ul li img {
+   width: 15rem;
+   height: 15rem; 
+}
+.items ul li div {
+    position: absolute;
+    bottom: 10px;
+    left: .75rem;
+    background-color: rgba(0, 0, 0, .4);
+    width: calc(100% - 3rem);
+    padding-left: 1.5rem;
+}
+.items ul li div .item-name {
+    margin: 0;
 }
 
 .otherInfos {
