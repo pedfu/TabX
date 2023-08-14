@@ -64,32 +64,29 @@ window.addEventListener('load', () => {
             mouseX = 0
         }
 
+        const onScroll = () => {
+			toggleButtons()
+		}
+
+		const toggleButtons = () => {
+			if (content.scrollLeft > maxScrollWidth - 10) {
+				nextButton.classList.add('disabled')
+			} else if ( content.scrollLeft < 10 ) {
+				prevButton.classList.add('disabled')
+			} else {
+				nextButton.classList.remove('disabled')
+				prevButton.classList.remove('disabled')
+			}
+		}
+
         content.addEventListener('mousemove', onMouseMove)
         content.addEventListener('mousedown', onMouseDown)
 
-        // if ( component.querySelector( CONTROLS_SELECTOR ) !== undefined ) {
-        //     content.addEventListener( 'scroll', scrollHandler );
-        // }
+        if (component.querySelector('.carousel-controls')) {
+            content.addEventListener('scroll', onScroll)
+        }
 
         content.addEventListener('mouseup', onMouseUp)
         content.addEventListener('mouseleave', onMouseUp)
-
-        // const scrollHandler = () => {
-		// 	toggleArrows();
-		// };
-
-		// /**
-		//  * Toggle arrow handler.
-		//  */
-		// const toggleArrows = () => {
-		// 	if ( content.scrollLeft > maxScrollWidth - 10 ) {
-		// 		nextButton.classList.add( 'disabled' );
-		// 	} else if ( content.scrollLeft < 10 ) {
-		// 		prevButton.classList.add( 'disabled' );
-		// 	} else {
-		// 		nextButton.classList.remove( 'disabled' );
-		// 		prevButton.classList.remove( 'disabled' );
-		// 	}
-		// };
     }
 })
