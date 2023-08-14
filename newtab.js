@@ -1,6 +1,15 @@
+
+function formatNumber(number) {
+    if (number >= 10) {
+        return `${number}`
+    }
+    return `0${number}`
+}
+
 window.addEventListener('load', () => {
     // get all wrappers (lists)
     const components = document.querySelectorAll('.carousel-wrapper')
+    const clock = document.getElementById('clock')
     
     for(let i=0; i<components?.length; i++) {
         const component = components[i]
@@ -88,5 +97,17 @@ window.addEventListener('load', () => {
 
         content.addEventListener('mouseup', onMouseUp)
         content.addEventListener('mouseleave', onMouseUp)
+
+
+        // time
+        const updateTime = () => {
+            var now = new Date()
+            const time = `${now.getHours()}:${formatNumber(now.getMinutes())}:${formatNumber(now.getSeconds())}`
+            clock.innerHTML = time
+
+            // if display only hour and minutes, change 1000 to 60000
+            setTimeout(updateTime, 1000)
+        }
+        updateTime()
     }
 })
