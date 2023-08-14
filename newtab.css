@@ -5,14 +5,14 @@ body {
 }
 
 /* avoid click and drag or select text */
-img {
+img, a {
   -webkit-user-drag: none;
   -khtml-user-drag: none;
   -moz-user-drag: none;
   -o-user-drag: none;
   user-drag: none;
 }
-p, h1, h2, h3, h4, h5, h6, span, img {
+p, h1, h2, h3, h4, h5, h6, span, img, a {
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
@@ -26,6 +26,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 20rem;
 }
 
 .profile, .middleNav, .otherInfos {
@@ -86,27 +87,43 @@ main {
 
 }
 .items ul {
+    height: 15rem;
     display: flex;
+    align-items: flex-end;
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 .items ul li {
-   position: relative; 
+   position: relative;
+   margin: 1rem;
+   transition: all .3s ease-in;
 }
 .items ul li img {
-   width: 15rem;
-   height: 15rem; 
+   width: 10rem;
+   height: 10rem; 
+   object-fit: cover;
+   transition: all .3s ease-in;
 }
 .items ul li div {
+    position: relative;
+}
+.items ul li div p {
     position: absolute;
     bottom: 0;
     background-color: rgba(0, 0, 0, .4);
     width: 100%;
-    padding-left: 1.5rem;
 }
 .items ul li div .item-name {
     margin: 0;
+}
+.items ul li:hover img {
+    width: 15rem;
+    height: 15rem;
+    object-fit: cover;
+}
+.items ul li:hover {
+    margin: 0 2rem 0 2rem;
 }
 
 .otherInfos {
