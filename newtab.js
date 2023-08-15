@@ -278,11 +278,11 @@ function loadLists() {
             const li = document.createElement('li')
             li.classList.add('carousel-item')
 
-            const link = document.createElement('a')
-            link.setAttribute('href', i.url)
-            link.addEventListener('dragstart', event => {
-                event.preventDefault();
-            });
+            // const link = document.createElement('a')
+            // link.setAttribute('href', i.url)
+            // link.addEventListener('dragstart', event => {
+            //     event.preventDefault();
+            // });
 
             const img = document.createElement('img')
             img.setAttribute('dragabble', 'false')
@@ -293,9 +293,14 @@ function loadLists() {
             name.classList.add('item-name')
             name.innerText = i.name
 
+            li.addEventListener('dblclick', () => {
+                window.location.href = i.url
+            })
+
             itemname.append(name)
-            link.append(img, itemname)
-            li.append(link)
+            // link.append(img, itemname)
+            // li.append(link)
+            li.append(img, itemname)
             ul.append(li)
         })
 
@@ -371,6 +376,8 @@ window.addEventListener('load', () => {
 
         const onMouseUp = () => {
             mouseX = 0
+            // add um grabbing quando tive movendo
+            // remover o grabbing aqui e isso bloqueia o hover
         }
 
         const onScroll = () => {
