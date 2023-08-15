@@ -1,3 +1,5 @@
+var isDragging = false
+var wasDragging = false
 
 function formatNumber(number) {
     if (number >= 10) {
@@ -293,8 +295,13 @@ function loadLists() {
             name.classList.add('item-name')
             name.innerText = i.name
 
-            li.addEventListener('dblclick', () => {
-                window.location.href = i.url
+            li.addEventListener('click', () => {
+                if(!wasDragging && !isDragging) 
+                    window.location.href = i.url
+                else {
+                    wasDragging = false
+                    isDragging = false
+                }
             })
 
             itemname.append(name)
@@ -371,10 +378,14 @@ window.addEventListener('load', () => {
 
 			if (mouseX) {
 				content.scrollLeft = content.sx + mouseX - mx
+
+                if (!isDragging) isDragging = true
 			}
         }
 
         const onMouseUp = () => {
+            wasDragging = isDragging
+            isDragging = false
             mouseX = 0
             // add um grabbing quando tive movendo
             // remover o grabbing aqui e isso bloqueia o hover
