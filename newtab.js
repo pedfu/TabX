@@ -3,6 +3,8 @@ var wasDragging = false
 
 var canDrag = false
 
+var currentId;
+
 function formatNumber(number) {
     if (number >= 10) {
         return `${number}`
@@ -297,6 +299,7 @@ function loadLists() {
         const wrapper = document.createElement('div')
         wrapper.classList.add('items')
         wrapper.classList.add('carousel-wrapper')
+        wrapper.id = 'list-' + list.id
 
         const header = document.createElement('div')
         header.classList.add('carousel-header')
@@ -414,6 +417,7 @@ function addInputListeners() {
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
         if (name && url && urlRegex.test(url)) {
             // create - add to list and load updated list
+            // use currentId to update list saved on localhost
             console.log('create')
         } else {
             window.alert('Name and/or URL are not fulfilled')
@@ -424,7 +428,6 @@ function addInputListeners() {
     fileInput.addEventListener('change', (event) => {
         const fileInput = event.target;
         const selectedFile = fileInput.files[0];
-        console.log(fileInput, selectedFile)
         if (selectedFile) {
             const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
 
@@ -447,16 +450,13 @@ function addInputListeners() {
     })
 }
 
-window.addEventListener('load', () => {
-    loadLists()
+function listOnClick() {
     const modalContainer = document.getElementById('add-modal-container')
-
-    // get all wrappers (lists)
     const components = document.querySelectorAll('.carousel-wrapper')
-    const clock = document.getElementById('clock')
     
     for(let i=0; i<components?.length; i++) {
         const component = components[i]
+        const id = Number(component.id.replace('list-', ''))
         const content = component.querySelector('.carousel-content')
 
         let x = 0
@@ -473,7 +473,8 @@ window.addEventListener('load', () => {
 
         if (addButton) {
             addButton.addEventListener('click', (event) => {
-                event.preventDefault()                
+                event.preventDefault()
+                currentId = id
                 addInputListeners()
                 modalContainer.classList.remove('hidden')
             })
@@ -560,6 +561,13 @@ window.addEventListener('load', () => {
         content.addEventListener('mouseup', onMouseUp)
         content.addEventListener('mouseleave', onMouseUp)
     }
+}
+
+window.addEventListener('load', () => {
+    const clock = document.getElementById('clock')
+
+    loadLists()
+    listOnClick()
 
     // time
     const updateTime = () => {
