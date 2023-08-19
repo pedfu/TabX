@@ -1,6 +1,8 @@
 var isDragging = false
 var wasDragging = false
 
+var canDrag = false
+
 function formatNumber(number) {
     if (number >= 10) {
         return `${number}`
@@ -10,6 +12,7 @@ function formatNumber(number) {
 
 const listExample = [
     {
+        id: 1, 
         name: 'ChapGPT',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -17,6 +20,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT2',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -24,6 +28,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT3',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -31,6 +36,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -38,6 +44,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -45,6 +52,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -52,6 +60,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -59,6 +68,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -66,6 +76,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -73,6 +84,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -80,6 +92,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -87,6 +100,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -94,6 +108,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -101,6 +116,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -108,6 +124,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -115,6 +132,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -122,6 +140,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -129,6 +148,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -136,6 +156,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -143,6 +164,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -150,6 +172,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -157,6 +180,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -164,6 +188,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -171,6 +196,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -178,6 +204,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -185,6 +212,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -192,6 +220,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -199,6 +228,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -206,6 +236,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -213,6 +244,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -220,6 +252,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -227,6 +260,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -234,6 +268,7 @@ const listExample = [
         backgroundImage: null,
     },
     {
+        id: 1, 
         name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
@@ -244,6 +279,7 @@ const listExample = [
 
 const listsExample = [
     {
+        id: 1,
         name: 'lista 1',
         description: 'aaaa',
         order: 1,
@@ -316,8 +352,104 @@ function loadLists() {
     }
 }
 
+// function addItemInList()
+function addInputListeners() {
+    const nameInput = document.getElementById('name-input')
+    const urlInput = document.getElementById('url-input')
+    const backgroundColorInput = document.getElementById('backgroundColor-input')
+    const fileInput = document.getElementById('fileInput')
+    
+    const submitButton = document.getElementById('submit')
+    const closeButton = document.getElementById('close')
+    
+    const previewItem = document.getElementById('preview-item')
+    const previewImage = document.getElementById('preview-image')
+    const previewItemName = document.getElementById('preview-item-name')
+    const expandButton = document.getElementById('preview-expand')
+    const expandIcon = document.getElementById('expand-icon')
+
+    const backgroundModal = document.getElementById('background-modal')
+    const modalContainer = document.getElementById('add-modal-container')
+    const modal = document.getElementById('add-modal')
+
+    // prevent close modal on click modal
+    modal.addEventListener('click', (event) => {
+        event.stopPropagation()
+    })
+    backgroundModal.addEventListener('click', (event) => {
+        modalContainer.classList.add('hidden')
+    })
+
+    expandButton.addEventListener('click', (event) => {
+        if (expandIcon.classList.contains('fa-angle-left')) {
+            expandButton.setAttribute('title', 'Show preview')
+            expandIcon.classList.remove('fa-angle-left')
+            expandIcon.classList.add('fa-angle-right')
+            previewItem.classList.add('hidden')
+        } else {
+            expandButton.setAttribute('title', 'Hide preview')
+            expandIcon.classList.remove('fa-angle-right')
+            expandIcon.classList.add('fa-angle-left')
+            previewItem.classList.remove('hidden')
+        }
+    })
+
+    backgroundColorInput.addEventListener('change', (event) => {
+        previewImage.style.backgroundColor = event.target.value
+    })
+
+    nameInput.addEventListener('change', (event) => {
+        previewItemName.innerText = event.target.value
+    })
+
+    submitButton.addEventListener('click', (event) => {
+        event.preventDefault()
+        const name = nameInput?.value
+        const url = urlInput?.value
+        const bgColor = backgroundColorInput?.value
+        const bgImage = fileInput?.files[0];
+        // logo should automatically be get by url
+        // only display logo if bg image is empty
+
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
+        if (name && url && urlRegex.test(url)) {
+            // create - add to list and load updated list
+            console.log('create')
+        } else {
+            window.alert('Name and/or URL are not fulfilled')
+            console.log('not create')            
+        }
+    })
+
+    fileInput.addEventListener('change', (event) => {
+        const fileInput = event.target;
+        const selectedFile = fileInput.files[0];
+        console.log(fileInput, selectedFile)
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                fileInput.value = '';
+                return;
+            }
+
+            const selectedImage = document.getElementById('selected-image');
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedImage.src = event.target.result;
+                previewImage.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    })
+}
+
 window.addEventListener('load', () => {
     loadLists()
+    const modalContainer = document.getElementById('add-modal-container')
 
     // get all wrappers (lists)
     const components = document.querySelectorAll('.carousel-wrapper')
@@ -333,9 +465,18 @@ window.addEventListener('load', () => {
 
         const nextButton = component.querySelector('.next')
         const prevButton = component.querySelector('.prev')
+        const addButton = component.querySelector('.add')
 
         if (maxScrollWidth !== 0) {
             component.classList.add('has-controls')
+        }
+
+        if (addButton) {
+            addButton.addEventListener('click', (event) => {
+                event.preventDefault()                
+                addInputListeners()
+                modalContainer.classList.remove('hidden')
+            })
         }
 
         if (nextButton) {
@@ -369,11 +510,13 @@ window.addEventListener('load', () => {
         }
         
         const onMouseDown = (event) => {
+            canDrag = true
             content.sx = content.scrollLeft
             mouseX = event.pageX - content.offsetLeft
         }
 
         const onMouseMove = (event) => {
+            if (!canDrag) return
             const mx = event.pageX - content.offsetLeft
 
 			if (mouseX) {
@@ -386,6 +529,7 @@ window.addEventListener('load', () => {
         const onMouseUp = () => {
             wasDragging = isDragging
             isDragging = false
+            canDrag = false
             mouseX = 0
             // add um grabbing quando tive movendo
             // remover o grabbing aqui e isso bloqueia o hover

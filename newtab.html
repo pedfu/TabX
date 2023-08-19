@@ -5,8 +5,62 @@
     <title>New Tab Page</title>
     <link rel="stylesheet" type="text/css" href="newtab.css" media="screen" />
     <script src="newtab.js"></script>
+    <script
+      src="https://kit.fontawesome.com/12ea93fece.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
+    <div id="add-modal-container" class="modal hidden">
+      <div id="background-modal" class="container">
+        <div id="add-modal" class="modal-container">
+          <form>
+            <h3>Create new item</h3>
+
+            <label for="name-input">Name:</label>
+            <input name="name" id="name-input" type="text" />
+
+            <label for="url-input">URL of the website:</label>
+            <input name="url" id="url-input" type="url" />
+
+            <label for="backgroundColor-input"
+              >Background for the logo (Optional):</label
+            >
+            <input
+              name="backgroundColor"
+              id="backgroundColor-input"
+              type="color"
+            />
+
+            <label for="fileInput">Background image (Optional):</label>
+            <label for="fileInput" class="custom-file-label">
+              Choose a PNG, JPG, or JPEG file
+              <img src="#" alt="Selected Image" id="selected-image" />
+            </label>
+            <input
+              name="backgroundImage"
+              type="file"
+              id="fileInput"
+              accept=".png, .jpg, .jpeg"
+              style="display: none"
+            />
+
+            <button id="submit">Create</button>
+          </form>
+          <div class="preview-container">
+            <div id="preview-item" class="preview-item">
+              <img id="preview-image" dragabble="false" src="" />
+              <div>
+                <p id="preview-item-name" class="item-name"></p>
+              </div>
+            </div>
+            <div id="preview-expand" title="Show preview">
+              <i id="expand-icon" class="fa-solid fa-angle-left"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <header>
       <div class="profile">
         <img src="assets/ext-icon.png" />
@@ -29,6 +83,7 @@
         <div class="carousel-header">
           <div></div>
           <div class="carousel-controls">
+            <button class="add">Add</button>
             <button class="prev disabled">Prev</button>
             <button class="next">Next</button>
           </div>

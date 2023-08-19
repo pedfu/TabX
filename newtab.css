@@ -2,6 +2,8 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    background: url(/assets/background.jpg) center black;
+    background-position: center;
 }
 
 /* avoid click and drag or select text */
@@ -18,8 +20,102 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
   user-select: none;
 }
 .dragging {
-    pointer-events: none;
+    /* pointer-events: none; */
 }
+.hidden {
+    display: none;
+}
+
+
+/* CREATE MODAL */
+.modal {
+    /* display: none; */
+}
+.modal.show {
+    display: block;
+}
+.modal .container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: rgba(0, 0, 0, .4);
+    left: 0;
+    top: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.modal .container .modal-container {
+    background-color: white;
+    border-radius: 5px;
+    display: flex;
+}
+.modal .container .modal-container form {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem;
+}
+.modal .container .modal-container form input, 
+.modal .container .modal-container form label {
+    margin: .5rem 1rem;
+}
+
+.custom-file-label {
+    display: block;
+    width: calc(100% - 2.25rem);
+    height: 200px;
+    border: 2px dashed #aaa;
+    text-align: center;
+    cursor: pointer;
+}
+#selected-image {
+    max-width: 100%;
+    max-height: calc(100% - 20px);
+    object-fit: contain;
+    display: block;
+}
+#fileInput {
+    display: none;
+}
+
+.preview-container {
+    display: flex;
+    align-items: center;
+}
+.preview-item {
+    margin-right: .5rem;
+}
+.preview-item img {
+    width: 10rem;
+    height: 10rem; 
+    object-fit: cover;
+}
+.preview-item div {
+    position: relative;
+}
+.preview-item div p {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .4);
+    width: 100%;
+}
+#preview-item-name {
+    margin: 0;
+    margin-bottom: 4px;
+}
+
+#preview-expand {
+    padding: .5rem;
+    cursor: pointer;
+    height: calc(100% - 15px);
+    display: flex;
+    align-items: center;
+}
+#preview-expand:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
 
 /* HEADER */
 header {
