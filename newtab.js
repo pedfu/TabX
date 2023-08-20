@@ -117,6 +117,7 @@ function loadLists() {
 
 function addItemToList(id, newItem) {
     const container = document.getElementById('carousel-container')
+    const modalContainer = document.getElementById('add-modal-container')
     const list = lists[id]
     const wrapper = document.getElementById('list-' + id)
     
@@ -159,6 +160,7 @@ function addInputListeners() {
     const urlInput = document.getElementById('url-input')
     const backgroundColorInput = document.getElementById('backgroundColor-input')
     const fileInput = document.getElementById('fileInput')
+    const selectedImage = document.getElementById('selected-image');
     
     const submitButton = document.getElementById('submit')
     const closeButton = document.getElementById('close')
@@ -203,6 +205,30 @@ function addInputListeners() {
         previewItemName.innerText = event.target.value
     })
 
+    
+    fileInput.addEventListener('change', (event) => {
+        const fileInput = event.target;
+        const selectedFile = fileInput.files[0];
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                fileInput.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedImage.src = event.target.result;
+                previewImage.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    })
+    
     submitButton.addEventListener('click', (event) => {
         event.preventDefault()
         const name = nameInput?.value
@@ -216,6 +242,8 @@ function addInputListeners() {
         if (name && url && urlRegex.test(url)) {
             // create - add to list and load updated list
             // use currentId to update list saved on localhost
+
+            // const favicon = fetchFavicon(url)
             
             const listItem = lists?.find(l => l.id === currentId)
             if (listItem) {
@@ -234,41 +262,28 @@ function addInputListeners() {
                 lists = [...othersLists, listItem].sort((a, b) => a?.id - b?.id)
                 addItemToList(currentId, newItem)
                 listOnClick()
+
+                localStorage.setItem('lists', JSON.stringify(lists))
+
+                modalContainer.classList.add('hidden')
+                nameInput.value = ''
+                urlInput.value = ''
+                fileInput.value = ''
+                selectedImage.src = ''
+                previewImage.src = ''
+                previewImage.style.backgroundColor = ''
+                backgroundColorInput.value = '#000000'
             }
         } else {
             window.alert('Name and/or URL are not fulfilled')
             console.log('not create')            
         }
     })
-
-    fileInput.addEventListener('change', (event) => {
-        const fileInput = event.target;
-        const selectedFile = fileInput.files[0];
-        if (selectedFile) {
-            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-
-            if (!allowedExtensions.exec(selectedFile.name)) {
-                alert('Please select a valid PNG, JPG, or JPEG file.');
-                fileInput.value = '';
-                return;
-            }
-
-            const selectedImage = document.getElementById('selected-image');
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                selectedImage.src = event.target.result;
-                previewImage.src = event.target.result;
-            };
-
-            reader.readAsDataURL(selectedFile);
-        }
-    })
 }
 
 function listOnClick() {
-    const modalContainer = document.getElementById('add-modal-container')
     const components = document.querySelectorAll('.carousel-wrapper')
+    const modalContainer = document.getElementById('add-modal-container')
     
     for(let i=0; i<components?.length; i++) {
         const component = components[i]
