@@ -5,13 +5,6 @@ var canDrag = false
 
 var currentId;
 
-function formatNumber(number) {
-    if (number >= 10) {
-        return `${number}`
-    }
-    return `0${number}`
-}
-
 const listExample = [
     {
         id: 1, 
@@ -22,256 +15,8 @@ const listExample = [
         backgroundImage: null,
     },
     {
-        id: 1, 
+        id: 2, 
         name: 'ChapGPT2',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT3',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 1, 
-        name: 'ChapGPT4',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
         backgroundColor: '#444444',
@@ -279,7 +24,7 @@ const listExample = [
     },
 ]
 
-const listsExample = [
+const l = [
     {
         id: 1,
         name: 'lista 1',
@@ -289,10 +34,24 @@ const listsExample = [
     }
 ]
 
+if (!localStorage.getItem('lists')) {
+    localStorage.setItem('lists', JSON.stringify(l))
+}
+var lists = JSON.parse(localStorage.getItem('lists'))
+console.log(lists)
+
+function formatNumber(number) {
+    if (number >= 10) {
+        return `${number}`
+    }
+    return `0${number}`
+}
+
 function loadLists() {
     // const lists = localStorage.getItem("lists") || listsExample
-    const lists = listsExample
+    // const lists = listsExample
     const container = document.getElementById('carousel-container')
+    container.innerHTML = ''
 
     for(var i=0; i<lists.length; i++) {
         const list = lists[i]
@@ -306,6 +65,7 @@ function loadLists() {
         header.innerHTML = `
             <div></div>
             <div class="carousel-controls">
+                <button class="add">Add</button>
                 <button class="prev disabled">Prev</button>
                 <button class="next">Next</button>
             </div>`
@@ -353,6 +113,44 @@ function loadLists() {
         wrapper.append(ul)
         container.append(wrapper)
     }
+}
+
+function addItemToList(id, newItem) {
+    const container = document.getElementById('carousel-container')
+    const list = lists[id]
+    const wrapper = document.getElementById('list-' + id)
+    
+    const ul = wrapper.querySelector('ul.carousel-content')
+    
+    const li = document.createElement('li')
+    li.classList.add('carousel-item')
+
+    const img = document.createElement('img')
+    img.setAttribute('dragabble', 'false')
+    img.setAttribute('src', newItem.logo)
+
+    const itemname = document.createElement('div')
+    const name = document.createElement('p')
+    name.classList.add('item-name')
+    name.innerText = newItem.name
+
+    li.addEventListener('click', () => {
+        if(!wasDragging && !isDragging) 
+            window.location.href = newItem.url
+        else {
+            wasDragging = false
+            isDragging = false
+        }
+    })
+
+    itemname.append(name)
+    // link.append(img, itemname)
+    // li.append(link)
+    li.append(img, itemname)
+    ul.append(li)
+
+    wrapper.append(ul)
+    container.append(wrapper)
 }
 
 // function addItemInList()
@@ -418,7 +216,25 @@ function addInputListeners() {
         if (name && url && urlRegex.test(url)) {
             // create - add to list and load updated list
             // use currentId to update list saved on localhost
-            console.log('create')
+            
+            const listItem = lists?.find(l => l.id === currentId)
+            if (listItem) {
+                const items = listItem?.items
+                const id = Number(items[items?.length - 1]?.id) + 1
+                const newItem = {
+                    id: id, 
+                    name: name,
+                    logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
+                    url: url,
+                    backgroundColor: bgColor,
+                    backgroundImage: bgImage,
+                }
+                listItem?.items?.push(newItem)
+                const othersLists = lists?.filter(l => l.id !== currentId)
+                lists = [...othersLists, listItem].sort((a, b) => a?.id - b?.id)
+                addItemToList(currentId, newItem)
+                listOnClick()
+            }
         } else {
             window.alert('Name and/or URL are not fulfilled')
             console.log('not create')            
