@@ -1,3 +1,13 @@
+// function order
+
+// formatNumber()
+// readImageAsDataUrl()
+// loadLists()
+// addItemToList()
+// addInputListeners()
+// listOnClick()
+
+
 var isDragging = false
 var wasDragging = false
 
@@ -78,16 +88,24 @@ function loadLists() {
         list.items.forEach(i => {
             const li = document.createElement('li')
             li.classList.add('carousel-item')
-
-            // const link = document.createElement('a')
-            // link.setAttribute('href', i.url)
-            // link.addEventListener('dragstart', event => {
-            //     event.preventDefault();
-            // });
+            li.style.background = `url("${i?.backgroundImage}") center / cover no-repeat, ${i?.backgroundColor}`
+            console.log(i?.backgroundImage)
 
             const img = document.createElement('img')
             img.setAttribute('dragabble', 'false')
-            img.setAttribute('src', i.logo)
+            img.classList.add('favicon')
+
+            // verify if null or {}
+            if (!i?.backgroundImage || 
+                (i?.backgroundImage !== null && 
+                    typeof i?.backgroundImage === 'object' && 
+                    Object.keys(i?.backgroundImage).length === 0)
+            ) {
+                img.setAttribute('src', i?.logo)
+            }
+            if (!i?.logo) {
+                img.classList.add('hidden')
+            }
 
             const itemname = document.createElement('div')
             const name = document.createElement('p')
@@ -154,6 +172,23 @@ function addItemToList(id, newItem) {
     container.append(wrapper)
 }
 
+function readImageAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+  
+      reader.onload = function (e) {
+        const imageDataUrl = e.target.result;
+        resolve(imageDataUrl);
+      };
+  
+      reader.onerror = function (e) {
+        reject(new Error('Error reading the image file.'));
+      };
+  
+      reader.readAsDataURL(file);
+    });
+  }
+
 // function addItemInList()
 function addInputListeners() {
     const nameInput = document.getElementById('name-input')
@@ -167,6 +202,7 @@ function addInputListeners() {
     
     const previewItem = document.getElementById('preview-item')
     const previewImage = document.getElementById('preview-image')
+    const previewFavicon = document.getElementById('preview-favicon')
     const previewItemName = document.getElementById('preview-item-name')
     const expandButton = document.getElementById('preview-expand')
     const expandIcon = document.getElementById('expand-icon')
@@ -204,6 +240,17 @@ function addInputListeners() {
     nameInput.addEventListener('change', (event) => {
         previewItemName.innerText = event.target.value
     })
+    
+    urlInput.addEventListener('change', (event) => {
+        const url = event.target.value
+        
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
+        if (urlRegex.test(url)) {
+            console.log('url2')
+            const favicon = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
+            previewFavicon.src = favicon
+        }
+    })
 
     
     fileInput.addEventListener('change', (event) => {
@@ -229,34 +276,37 @@ function addInputListeners() {
         }
     })
     
-    submitButton.addEventListener('click', (event) => {
+    submitButton.addEventListener('click', async (event) => {
         event.preventDefault()
         const name = nameInput?.value
         const url = urlInput?.value
         const bgColor = backgroundColorInput?.value
         const bgImage = fileInput?.files[0];
-        // logo should automatically be get by url
-        // only display logo if bg image is empty
 
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
         if (name && url && urlRegex.test(url)) {
             // create - add to list and load updated list
             // use currentId to update list saved on localhost
-
-            // const favicon = fetchFavicon(url)
-            
             const listItem = lists?.find(l => l.id === currentId)
             if (listItem) {
                 const items = listItem?.items
                 const id = Number(items[items?.length - 1]?.id) + 1
+                const logoUrl = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
                 const newItem = {
                     id: id, 
                     name: name,
-                    logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
+                    logo: logoUrl,
                     url: url,
                     backgroundColor: bgColor,
-                    backgroundImage: bgImage,
+                    backgroundImage: null,
                 }
+                
+                if (bgImage) {
+                    const imageDataUrl = await readImageAsDataUrl(bgImage)
+                    newItem.backgroundImage 
+= imageDataUrl
+                }
+                
                 listItem?.items?.push(newItem)
                 const othersLists = lists?.filter(l => l.id !== currentId)
                 lists = [...othersLists, listItem].sort((a, b) => a?.id - b?.id)
@@ -396,6 +446,23 @@ function listOnClick() {
 
 window.addEventListener('load', () => {
     const clock = document.getElementById('clock')
+    
+    // const headers = new Headers({
+
+    // })
+    // fetch('https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.google.com&size=16', { method: 'GET', mode: 'no-cors' })
+    // .then(response => {
+    //     console.log(response)
+    //     return response.blob();
+    //   })
+    //   .then(faviconBlob => {
+    //     const faviconUrl = URL.createObjectURL(faviconBlob);
+    //     const faviconImage = new Image();
+    //     faviconImage.src = faviconUrl;
+    //     console.log(faviconUrl)
+    
+    //     document.body.appendChild(faviconImage);
+    //   })
 
     loadLists()
     listOnClick()

@@ -24,6 +24,7 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
 }
 .hidden {
     display: none;
+    opacity: 0;
 }
 
 
@@ -85,6 +86,10 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
 }
 .preview-item {
     margin-right: .5rem;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .preview-item img {
     width: 10rem;
@@ -103,6 +108,12 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
 #preview-item-name {
     margin: 0;
     margin-bottom: 4px;
+}
+#preview-favicon {
+    width: 3rem;
+    height: 3rem;
+    object-fit: contain;
+    position: absolute;
 }
 
 #preview-expand {
@@ -192,21 +203,24 @@ main {
 }
 .items ul li {
    position: relative;
+   display: flex;
+   justify-content: center;
+   align-items: center;
    margin: 1rem;
    transition: all .3s ease-in;
+   min-width: 10rem;
+   min-height: 10rem;
 }
 .items ul li img {
-   width: 10rem;
-   height: 10rem; 
+   width: 3rem;
+   height: 3rem; 
    object-fit: cover;
    transition: all .3s ease-in;
-}
-.items ul li div {
-    position: relative;
 }
 .items ul li div p {
     position: absolute;
     bottom: 0;
+    left: 0;
     background-color: rgba(0, 0, 0, .4);
     width: 100%;
 }
@@ -214,12 +228,12 @@ main {
     margin: 0;
 }
 .items ul li:hover img {
-    width: 15rem;
-    height: 15rem;
-    object-fit: cover;
+    /* width: 15rem; */
+    /* height: 15rem; */
+    /* object-fit: cover; */
 }
 .items ul li:hover {
-    margin: 0 2rem 0 2rem;
+    /* margin: 0 2rem 0 2rem; */
 }
 
 .otherInfos {
