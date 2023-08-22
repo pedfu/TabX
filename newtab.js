@@ -21,6 +21,7 @@ const listExample = [
         name: 'ChapGPT',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
+        showLogo: true,
         backgroundColor: '#444444',
         backgroundImage: null,
     },
@@ -29,6 +30,7 @@ const listExample = [
         name: 'ChapGPT2',
         logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
         url: 'https://chat.openai.com/',
+        showLogo: true,
         backgroundColor: '#444444',
         backgroundImage: null,
     },
@@ -89,7 +91,6 @@ function loadLists() {
             const li = document.createElement('li')
             li.classList.add('carousel-item')
             li.style.background = `url("${i?.backgroundImage}") center / cover no-repeat, ${i?.backgroundColor}`
-            console.log(i?.backgroundImage)
 
             const img = document.createElement('img')
             img.setAttribute('dragabble', 'false')
@@ -103,7 +104,7 @@ function loadLists() {
             ) {
                 img.setAttribute('src', i?.logo)
             }
-            if (!i?.logo) {
+            if (!i?.logo || !i?.showLogo) {
                 img.classList.add('hidden')
             }
 
@@ -143,10 +144,22 @@ function addItemToList(id, newItem) {
     
     const li = document.createElement('li')
     li.classList.add('carousel-item')
+    li.style.background = `url("${newItem?.backgroundImage}") center / cover no-repeat, ${newItem?.backgroundColor}`
 
     const img = document.createElement('img')
     img.setAttribute('dragabble', 'false')
-    img.setAttribute('src', newItem.logo)
+    img.classList.add('favicon')
+
+    if (!newItem?.backgroundImage || 
+        (newItem?.backgroundImage !== null && 
+            typeof newItem?.backgroundImage === 'object' && 
+            Object.keys(newItem?.backgroundImage).length === 0)
+    ) {
+        img.setAttribute('src', newItem?.logo)
+    }
+    if (!newItem?.logo || !newItem?.showLogo) {
+        img.classList.add('hidden')
+    }
 
     const itemname = document.createElement('div')
     const name = document.createElement('p')
@@ -195,7 +208,8 @@ function addInputListeners() {
     const urlInput = document.getElementById('url-input')
     const backgroundColorInput = document.getElementById('backgroundColor-input')
     const fileInput = document.getElementById('fileInput')
-    const selectedImage = document.getElementById('selected-image');
+    const selectedImage = document.getElementById('selected-image')
+    const showLogoInput = document.getElementById('show-logo')
     
     const submitButton = document.getElementById('submit')
     const closeButton = document.getElementById('close')
@@ -219,6 +233,15 @@ function addInputListeners() {
         modalContainer.classList.add('hidden')
     })
 
+    showLogoInput.addEventListener('change', (event) => {
+        console.log(event)
+        if (!event.target.checked) {
+            previewFavicon.style.display = 'none'
+        } else {
+            previewFavicon.style.display = 'block'
+        }
+    })
+
     expandButton.addEventListener('click', (event) => {
         if (expandIcon.classList.contains('fa-angle-left')) {
             expandButton.setAttribute('title', 'Show preview')
@@ -234,6 +257,7 @@ function addInputListeners() {
     })
 
     backgroundColorInput.addEventListener('change', (event) => {
+        previewImage.style.display = 'block'
         previewImage.style.backgroundColor = event.target.value
     })
 
@@ -248,6 +272,7 @@ function addInputListeners() {
         if (urlRegex.test(url)) {
             console.log('url2')
             const favicon = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
+            previewFavicon.style.display = 'block'
             previewFavicon.src = favicon
         }
     })
@@ -269,6 +294,8 @@ function addInputListeners() {
 
             reader.onload = function(event) {
                 selectedImage.src = event.target.result;
+
+                previewImage.style.display = 'block'
                 previewImage.src = event.target.result;
             };
 
@@ -282,6 +309,7 @@ function addInputListeners() {
         const url = urlInput?.value
         const bgColor = backgroundColorInput?.value
         const bgImage = fileInput?.files[0];
+        const showLogo = showLogoInput?.checked;
 
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
         if (name && url && urlRegex.test(url)) {
@@ -299,6 +327,7 @@ function addInputListeners() {
                     url: url,
                     backgroundColor: bgColor,
                     backgroundImage: null,
+                    showLogo: showLogo || false,
                 }
                 
                 if (bgImage) {
@@ -321,8 +350,10 @@ function addInputListeners() {
                 fileInput.value = ''
                 selectedImage.src = ''
                 previewImage.src = ''
+                previewFavicon.src = ''
                 previewImage.style.backgroundColor = ''
                 backgroundColorInput.value = '#000000'
+                showLogoInput.checked = true
             }
         } else {
             window.alert('Name and/or URL are not fulfilled')
