@@ -1,9 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
+
 body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
     background: url(/assets/background.jpg) center black;
     background-position: center;
+    font-family: 'Open Sans', sans-serif;
 }
 
 /* avoid click and drag or select text */
@@ -64,6 +67,17 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
     margin: .5rem 1rem;
 }
 
+/* MODAL ADD LIST */
+.list-name-label#list-label {
+    margin: 0;
+    margin-bottom: 0.5rem;
+}
+.list-name-input#name-list-input {
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+/* MODAL ADD ITEM */
 .custom-file-label {
     display: block;
     width: calc(100% - 2.25rem);
@@ -146,7 +160,6 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 20rem;
 }
 
 .profile, .middleNav, .otherInfos {
@@ -164,10 +177,15 @@ header {
     width: 2rem;
     height: 2rem;
     border-radius: 50%;
+    margin-right: .5rem;
+}
+.profile-info p {
+    margin: 0;
 }
 
 /* CONTENT */
 main {
+    margin-top: 30vh;
     justify-content: center;
     max-width: 100vw;
     overflow-x: hidden;
@@ -176,16 +194,34 @@ main {
     justify-content: center;
 }
 
+.carousel-header .list-title {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
 .carousel-header {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    padding-left: 1rem;
 }
 .carousel-header .carousel-controls {
     display: flex;
 }
 .carousel-controls button {
-    margin: 1rem;
     cursor: pointer;
+    margin: 0;
+    background: none;
+    outline: none;
+    border: none;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    margin: 0 .25rem;
+}
+.carousel-controls button:hover {
+    background-color: rgba(0,0,0,.25);
 }
 .carousel-controls button.disabled {
     opacity: .5;
@@ -223,6 +259,8 @@ main {
    transition: all .3s ease-in;
    min-width: 10rem;
    min-height: 10rem;
+   border-radius: 1rem;
+   box-shadow: 0 5px 10px rgba(0,0,0,.5);
 }
 .items ul li img {
    width: 2rem;
@@ -230,19 +268,33 @@ main {
    object-fit: cover;
    transition: all .3s ease-in;
 }
-.items ul li div p {
+.items ul li div {
     position: absolute;
     bottom: 0;
     left: 0;
     background-color: rgba(0, 0, 0, .4);
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
     width: 100%;
+    height: 2rem;
+    display: flex;
+    align-items: center;
 }
 .items ul li div .item-name {
+    color: lightgray;
+    padding: 0 1rem;
     margin: 0;
+    font-size: 1rem;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-.items ul li:hover img {
-    /* width: 15rem; */
-    /* height: 15rem; */
+.items ul li:hover {
+    width: 14rem;
+    height: 14rem;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
     /* object-fit: cover; */
 }
 .items ul li:hover {

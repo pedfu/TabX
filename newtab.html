@@ -11,11 +11,12 @@
     ></script>
   </head>
   <body>
+    <!-- MODAL ADD ITEM TO LIST -->
     <div id="add-modal-container" class="modal hidden">
       <div id="background-modal" class="container">
         <div id="add-modal" class="modal-container">
           <form>
-            <h3>Create new item</h3>
+            <h3>Create item</h3>
 
             <label for="name-input">Name:</label>
             <input name="name" id="name-input" type="text" />
@@ -80,6 +81,22 @@
         </div>
       </div>
     </div>
+
+    <!-- MODAL ADD LIST -->
+    <div id="add-list-modal-container" class="modal">
+      <div id="background-list-modal" class="container hidden">
+        <div id="add-modal" class="modal-container">
+          <form>
+            <h3>Create list</h3>
+
+            <label for="name-input" id="list-label" class="list-name-label">Name:</label>
+            <input name="name" id="name-list-input" class="list-name-input" type="text" />
+
+            <button id="submit">Create</button>
+          </form>
+      </div>
+    </div>
+
     <header>
       <div class="profile">
         <img src="assets/ext-icon.png" />
@@ -97,14 +114,21 @@
         <p id="clock">20:22</p>
       </div>
     </header>
+    <button id="add-list">Adicionar na lista</button>
     <main id="carousel-container">
       <div class="items carousel-wrapper" id="list-0">
         <div class="carousel-header">
-          <div></div>
+          <p class="list-title">Teste nome</p>
           <div class="carousel-controls">
-            <button class="add">Add</button>
-            <button class="prev disabled">Prev</button>
-            <button class="next">Next</button>
+            <button class="add">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <button class="prev disabled">
+              <i class="fa-solid fa-angles-left"></i>
+            </button>
+            <button class="next">
+              <i class="fa-solid fa-angles-right"></i>
+            </button>
           </div>
         </div>
         <ul class="carousel-content">
