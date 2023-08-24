@@ -4,7 +4,7 @@
 // readImageAsDataUrl()
 // loadLists()
 // addItemToList()
-// addInputListeners()
+// addItemInputListeners()
 // listOnClick()
 
 
@@ -50,7 +50,6 @@ if (!localStorage.getItem('lists')) {
     localStorage.setItem('lists', JSON.stringify(l))
 }
 var lists = JSON.parse(localStorage.getItem('lists'))
-console.log(lists)
 
 function formatNumber(number) {
     if (number >= 10) {
@@ -64,9 +63,9 @@ function loadLists() {
     // const lists = listsExample
     const container = document.getElementById('carousel-container')
     container.innerHTML = ''
-
-    for(var i=0; i<lists.length; i++) {
-        const list = lists[i]
+    const sortedList = lists.sort((a, b) => a.order - b.order)
+    for(var i=0; i<sortedList.length; i++) {
+        const list = sortedList[i]
         const wrapper = document.createElement('div')
         wrapper.classList.add('items')
         wrapper.classList.add('carousel-wrapper')
@@ -75,11 +74,17 @@ function loadLists() {
         const header = document.createElement('div')
         header.classList.add('carousel-header')
         header.innerHTML = `
-            <div></div>
+            <p class="list-title">${list.name}</p>
             <div class="carousel-controls">
-                <button class="add">Add</button>
-                <button class="prev disabled">Prev</button>
-                <button class="next">Next</button>
+                <button class="add">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <button class="prev disabled">
+                    <i class="fa-solid fa-angles-left"></i>
+                </button>
+                <button class="next">
+                    <i class="fa-solid fa-angles-right"></i>
+                </button>
             </div>`
 
         wrapper.append(header)
@@ -202,8 +207,41 @@ function readImageAsDataUrl(file) {
     });
   }
 
-// function addItemInList()
-function addInputListeners() {
+function addListInputListeners() {
+    const nameInput = document.getElementById('name-list-input')
+    const submitButton = document.querySelector('#add-list-modal-container #submit')
+    const closeButton = document.getElementById('#add-list-modal-container #close')
+
+    const backgroundModal = document.getElementById('background-list-modal')
+
+    submitButton.addEventListener('click', async (event) => {
+        event.preventDefault()
+        const name = nameInput?.value
+
+        const sortedList = lists.sort((a, b) => a.id = b.id)
+        var id = 1;
+        if (sortedList.length > 0) {
+            id = sortedList[sortedList.length - 1]?.id
+        }
+        
+        const newList = {
+            id: id + 1,
+            name: name,
+            description: '',
+            order: id + 1,
+            items: []
+        }
+        sortedList.push(newList)
+
+        nameInput.value = ''
+        localStorage.setItem('lists', JSON.stringify(sortedList))
+        backgroundModal.classList.add('hidden')
+        loadLists() // add list to screen instead of reloading all
+        listOnClick()
+    })
+}
+
+function addItemInputListeners() {
     const nameInput = document.getElementById('name-input')
     const urlInput = document.getElementById('url-input')
     const backgroundColorInput = document.getElementById('backgroundColor-input')
@@ -234,7 +272,6 @@ function addInputListeners() {
     })
 
     showLogoInput.addEventListener('change', (event) => {
-        console.log(event)
         if (!event.target.checked) {
             previewFavicon.style.display = 'none'
         } else {
@@ -270,7 +307,6 @@ function addInputListeners() {
         
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
         if (urlRegex.test(url)) {
-            console.log('url2')
             const favicon = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
             previewFavicon.style.display = 'block'
             previewFavicon.src = favicon
@@ -357,7 +393,7 @@ function addInputListeners() {
             }
         } else {
             window.alert('Name and/or URL are not fulfilled')
-            console.log('not create')            
+            console.error('not create')            
         }
     })
 }
@@ -387,7 +423,7 @@ function listOnClick() {
             addButton.addEventListener('click', (event) => {
                 event.preventDefault()
                 currentId = id
-                addInputListeners()
+                addItemInputListeners()
                 modalContainer.classList.remove('hidden')
             })
         }
@@ -477,23 +513,13 @@ function listOnClick() {
 
 window.addEventListener('load', () => {
     const clock = document.getElementById('clock')
-    
-    // const headers = new Headers({
+    const addList = document.getElementById('add-list')
 
-    // })
-    // fetch('https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.google.com&size=16', { method: 'GET', mode: 'no-cors' })
-    // .then(response => {
-    //     console.log(response)
-    //     return response.blob();
-    //   })
-    //   .then(faviconBlob => {
-    //     const faviconUrl = URL.createObjectURL(faviconBlob);
-    //     const faviconImage = new Image();
-    //     faviconImage.src = faviconUrl;
-    //     console.log(faviconUrl)
-    
-    //     document.body.appendChild(faviconImage);
-    //   })
+    addList.addEventListener('click', () => {
+        const addListModal = document.getElementById('background-list-modal')
+        addListModal.classList.remove('hidden')
+        addListInputListeners()
+    })
 
     loadLists()
     listOnClick()
