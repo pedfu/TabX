@@ -187,7 +187,8 @@ header {
 
 /* CONTENT */
 main {
-    margin-top: 30vh;
+    /* margin-top: 30vh; */
+    margin-top: 4rem;
     justify-content: center;
     max-width: 100vw;
     overflow-x: hidden;

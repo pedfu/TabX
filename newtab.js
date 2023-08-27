@@ -14,6 +14,7 @@ var wasDragging = false
 var canDrag = false
 
 var currentId;
+var modalAddItem = null
 
 const listExample = [
     {
@@ -50,6 +51,55 @@ if (!localStorage.getItem('lists')) {
     localStorage.setItem('lists', JSON.stringify(l))
 }
 var lists = JSON.parse(localStorage.getItem('lists'))
+
+function delButtonClickHandler(event) {
+    const filteredList = lists.filter(x => x?.id !== id).sort((a, b) => a?.id - b?.id)
+    // remove from lists
+    lists = filteredList
+    loadLists()
+    listOnClick()
+    localStorage.setItem('lists', JSON.stringify(filteredList))
+}
+
+function addButtonClickHandler(event) {
+    event.preventDefault()
+    const component = event.currentTarget.closest('.carousel-wrapper');
+    if (component) {
+        const id = Number(component.id.replace('list-', ''));
+        currentId = id;
+        addItemInputListeners();
+        if (!modalAddItem) modalAddItem = document.getElementById('add-modal-container')
+        modalAddItem.classList.remove('hidden');
+    }
+}
+
+function nextButtonClickHandler(event) {
+    event.preventDefault();
+    const component = event.currentTarget.closest('.carousel-wrapper');
+    const content = component.querySelector('.carousel-content');
+    const halfClientWidth = content.clientWidth / 2;
+    const currentScrollLeft = content.scrollLeft;
+    const newScrollLeft = currentScrollLeft + halfClientWidth;
+
+    content.scroll({
+        left: newScrollLeft,
+        behavior: 'smooth'
+    });
+}
+
+function prevButtonClickHandler(event) {
+    event.preventDefault()
+    const component = event.currentTarget.closest('.carousel-wrapper');
+    const content = component.querySelector('.carousel-content');
+    const halfClientWidth = content.clientWidth / 2;
+    const currentScrollLeft = content.scrollLeft;
+    const newScrollLeft = currentScrollLeft - halfClientWidth;
+
+    content.scroll({
+        left: newScrollLeft,
+        behavior: 'smooth'
+    })
+}
 
 function formatNumber(number) {
     if (number >= 10) {
@@ -240,7 +290,7 @@ function addListInputListeners() {
         backgroundModal.classList.add('hidden')
         nameInput.value = ''
         loadLists() // add list to screen instead of reloading all
-        // listOnClick()
+        listOnClick()
     })
 }
 
@@ -379,7 +429,7 @@ function addItemInputListeners() {
                 const othersLists = lists?.filter(l => l.id !== currentId)
                 lists = [...othersLists, listItem].sort((a, b) => a?.id - b?.id)
                 addItemToList(currentId, newItem)
-                listOnClick()
+                // listOnClick()
 
                 localStorage.setItem('lists', JSON.stringify(lists))
 
@@ -419,60 +469,20 @@ function listOnClick() {
         const addButton = component.querySelector('.add')
         const delButton = component.querySelector('.del')
 
+        delButton?.removeEventListener('click', delButtonClickHandler);
+        addButton?.removeEventListener('click', addButtonClickHandler);
+        nextButton?.removeEventListener('click', nextButtonClickHandler);
+        prevButton?.removeEventListener('click', prevButtonClickHandler);
+
+        delButton?.addEventListener('click', delButtonClickHandler);
+        addButton?.addEventListener('click', addButtonClickHandler);
+        nextButton?.addEventListener('click', nextButtonClickHandler);
+        prevButton?.addEventListener('click', prevButtonClickHandler);
+
         if (maxScrollWidth !== 0) {
             component.classList.add('has-controls')
         }
 
-        if (delButton) {
-            delButton.addEventListener('click', (event) => {
-                const filteredList = lists.filter(x => x?.id !== id).sort((a, b) => a?.id - b?.id)
-                // remove from lists
-                lists = filteredList
-                loadLists()
-                listOnClick()
-                localStorage.setItem('lists', JSON.stringify(filteredList))
-            })
-        }
-
-        if (addButton) {
-            addButton.addEventListener('click', (event) => {
-                event.preventDefault()
-                currentId = id
-                addItemInputListeners()
-                modalContainer.classList.remove('hidden')
-            })
-        }
-
-        if (nextButton) {
-            nextButton.addEventListener('click', (event) => {
-                event.preventDefault();
-        
-                const halfClientWidth = content.clientWidth / 2;
-                const currentScrollLeft = content.scrollLeft;
-                const newScrollLeft = currentScrollLeft + halfClientWidth;
-        
-                content.scroll({
-                    left: newScrollLeft,
-                    behavior: 'smooth'
-                });
-            });
-        }
-
-        if (prevButton) {
-            prevButton.addEventListener('click', (event) => {
-                event.preventDefault()
-
-                const halfClientWidth = content.clientWidth / 2;
-                const currentScrollLeft = content.scrollLeft;
-                const newScrollLeft = currentScrollLeft - halfClientWidth;
-
-                content.scroll({
-                    left: newScrollLeft,
-                    behavior: 'smooth'
-                })
-            })
-        }
-        
         const onMouseDown = (event) => {
             canDrag = true
             content.sx = content.scrollLeft
@@ -513,6 +523,12 @@ function listOnClick() {
 				prevButton.classList.remove('disabled')
 			}
 		}
+
+        content.removeEventListener('mousemove', onMouseMove);
+        content.removeEventListener('mousedown', onMouseDown);
+        content.removeEventListener('scroll', onScroll);
+        content.removeEventListener('mouseup', onMouseUp);
+        content.removeEventListener('mouseleave', onMouseUp);
 
         content.addEventListener('mousemove', onMouseMove)
         content.addEventListener('mousedown', onMouseDown)
