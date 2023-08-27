@@ -4,9 +4,11 @@ body {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
-    background: url(/assets/background.jpg) center black;
+    background: url(/assets/background.jpg) no-repeat center black;
+    background-size: cover;
     background-position: center;
     font-family: 'Open Sans', sans-serif;
+    min-height: 100vh;
 }
 
 /* avoid click and drag or select text */
@@ -256,7 +258,8 @@ main {
    justify-content: center;
    align-items: center;
    margin: 1rem;
-   transition: all .3s ease-in;
+   margin-bottom: 2rem;
+   transition: all .15s ease-in;
    min-width: 10rem;
    min-height: 10rem;
    border-radius: 1rem;
@@ -266,7 +269,7 @@ main {
    width: 2rem;
    height: 2rem; 
    object-fit: cover;
-   transition: all .3s ease-in;
+   transition: all .15s ease-in;
 }
 .items ul li div {
     position: absolute;
@@ -291,8 +294,9 @@ main {
     text-overflow: ellipsis;
 }
 .items ul li:hover {
-    width: 14rem;
-    height: 14rem;
+    /* width: 14rem;
+    height: 14rem; */
+    transform: scale(1.1);
     border-top-right-radius: 1rem;
     border-top-left-radius: 1rem;
     /* object-fit: cover; */

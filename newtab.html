@@ -83,17 +83,25 @@
     </div>
 
     <!-- MODAL ADD LIST -->
-    <div id="add-list-modal-container" class="modal">
-      <div id="background-list-modal" class="container hidden">
+    <div id="add-list-modal-container" class="modal hidden">
+      <div id="background-list-modal" class="container">
         <div id="add-modal" class="modal-container">
           <form>
             <h3>Create list</h3>
 
-            <label for="name-input" id="list-label" class="list-name-label">Name:</label>
-            <input name="name" id="name-list-input" class="list-name-input" type="text" />
+            <label for="name-input" id="list-label" class="list-name-label"
+              >Name:</label
+            >
+            <input
+              name="name"
+              id="name-list-input"
+              class="list-name-input"
+              type="text"
+            />
 
             <button id="submit">Create</button>
           </form>
+        </div>
       </div>
     </div>
 
@@ -120,6 +128,9 @@
         <div class="carousel-header">
           <p class="list-title">Teste nome</p>
           <div class="carousel-controls">
+            <button class="del">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
             <button class="add">
               <i class="fa-solid fa-plus"></i>
             </button>

@@ -76,6 +76,9 @@ function loadLists() {
         header.innerHTML = `
             <p class="list-title">${list.name}</p>
             <div class="carousel-controls">
+                <button class="del">
+                    <i class="fa-regular fa-trash-can"></i>
+                </button>
                 <button class="add">
                     <i class="fa-solid fa-plus"></i>
                 </button>
@@ -212,32 +215,32 @@ function addListInputListeners() {
     const submitButton = document.querySelector('#add-list-modal-container #submit')
     const closeButton = document.getElementById('#add-list-modal-container #close')
 
-    const backgroundModal = document.getElementById('background-list-modal')
+    const backgroundModal = document.getElementById('add-list-modal-container')
 
-    submitButton.addEventListener('click', async (event) => {
+    submitButton.addEventListener('click', (event) => {
         event.preventDefault()
         const name = nameInput?.value
 
-        const sortedList = lists.sort((a, b) => a.id = b.id)
+        const sortedList = lists.sort((a, b) => a.id - b.id)
         var id = 1;
         if (sortedList.length > 0) {
             id = sortedList[sortedList.length - 1]?.id
         }
         
-        const newList = {
+        const newItem = {
             id: id + 1,
             name: name,
             description: '',
             order: id + 1,
             items: []
         }
-        sortedList.push(newList)
 
-        nameInput.value = ''
-        localStorage.setItem('lists', JSON.stringify(sortedList))
+        lists = [...sortedList, newItem]
+        localStorage.setItem('lists', JSON.stringify([...sortedList, newItem]))
         backgroundModal.classList.add('hidden')
+        nameInput.value = ''
         loadLists() // add list to screen instead of reloading all
-        listOnClick()
+        // listOnClick()
     })
 }
 
@@ -414,9 +417,21 @@ function listOnClick() {
         const nextButton = component.querySelector('.next')
         const prevButton = component.querySelector('.prev')
         const addButton = component.querySelector('.add')
+        const delButton = component.querySelector('.del')
 
         if (maxScrollWidth !== 0) {
             component.classList.add('has-controls')
+        }
+
+        if (delButton) {
+            delButton.addEventListener('click', (event) => {
+                const filteredList = lists.filter(x => x?.id !== id).sort((a, b) => a?.id - b?.id)
+                // remove from lists
+                lists = filteredList
+                loadLists()
+                listOnClick()
+                localStorage.setItem('lists', JSON.stringify(filteredList))
+            })
         }
 
         if (addButton) {
@@ -514,11 +529,11 @@ function listOnClick() {
 window.addEventListener('load', () => {
     const clock = document.getElementById('clock')
     const addList = document.getElementById('add-list')
+    addListInputListeners()
 
     addList.addEventListener('click', () => {
-        const addListModal = document.getElementById('background-list-modal')
+        const addListModal = document.getElementById('add-list-modal-container')
         addListModal.classList.remove('hidden')
-        addListInputListeners()
     })
 
     loadLists()
