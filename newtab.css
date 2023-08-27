@@ -215,13 +215,13 @@ main {
 .carousel-header .list-title {
     font-size: 1.5rem;
     font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .carousel-header .title-container {
     display: flex;
     align-items: center;
-}
-.carousel-header .title-container i {
-    margin-right: .75rem;
 }
 
 .carousel-header {
@@ -236,7 +236,10 @@ main {
 .button-expand {
     cursor: pointer;
 }
-.carousel-controls button {
+.carousel-header button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
     margin: 0;
     background: none;
@@ -247,6 +250,9 @@ main {
     width: 2.5rem;
     height: 2.5rem;
     margin: 0 .25rem;
+}
+.carousel-header button.button-expand {
+    margin: 0;
 }
 .carousel-controls button:hover {
     background-color: rgba(0,0,0,.25);
