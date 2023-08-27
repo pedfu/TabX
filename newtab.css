@@ -98,15 +98,22 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
     display: none;
 }
 
+#preview-image {
+    border-radius: 1rem;
+}
 #preview-item {
     width: 10rem;
     height: 10rem;
+    border-radius: 1rem;
+    box-shadow: 0 5px 10px rgba(0,0,0,.5);
 }
 #preview-item div {
     position: absolute;
     bottom: -4px;
     left: 0;
     width: 100%;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
 }
 
 .preview-container {
@@ -132,7 +139,15 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
     position: absolute;
     bottom: 0;
     background-color: rgba(0, 0, 0, .4);
-    width: 100%;
+    width: calc(100% - 2rem);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    color: lightgray;
+    padding: .25rem 1rem;
+    max-width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 #preview-item-name {
     margin: 0;
@@ -201,6 +216,13 @@ main {
     font-size: 1.5rem;
     font-weight: 500;
 }
+.carousel-header .title-container {
+    display: flex;
+    align-items: center;
+}
+.carousel-header .title-container i {
+    margin-right: .75rem;
+}
 
 .carousel-header {
     display: flex;
@@ -210,6 +232,9 @@ main {
 }
 .carousel-header .carousel-controls {
     display: flex;
+}
+.button-expand {
+    cursor: pointer;
 }
 .carousel-controls button {
     cursor: pointer;
@@ -246,7 +271,7 @@ main {
 
 }
 .items ul {
-    height: 15rem;
+    height: 13rem;
     display: flex;
     align-items: flex-end;
     list-style-type: none;

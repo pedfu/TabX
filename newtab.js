@@ -61,6 +61,25 @@ function delButtonClickHandler(event) {
     localStorage.setItem('lists', JSON.stringify(filteredList))
 }
 
+function expandButtonClickHandler(event) {
+    const component = event.currentTarget.closest('.carousel-wrapper');
+    const content = component.querySelector('.carousel-content')
+    if (component) {
+        const expandListButton = component.querySelector('.button-expand')
+        if (expandListButton?.classList.contains('fa-angle-down')) {
+            expandListButton?.classList.remove('fa-angle-down')
+            expandListButton?.classList.add('fa-angle-up')
+            content.style.height = '13rem'
+        } else {
+            expandListButton?.classList.remove('fa-angle-up')
+            expandListButton?.classList.add('fa-angle-down')
+            content.style.height = '0rem'
+        }
+        const id = Number(component.id.replace('list-', ''));
+        
+    }
+}
+
 function addButtonClickHandler(event) {
     event.preventDefault()
     const component = event.currentTarget.closest('.carousel-wrapper');
@@ -121,10 +140,14 @@ function loadLists() {
         wrapper.classList.add('carousel-wrapper')
         wrapper.id = 'list-' + list.id
 
+        // <i class="fa-solid fa-angle-down"></i>
         const header = document.createElement('div')
         header.classList.add('carousel-header')
         header.innerHTML = `
-            <p class="list-title">${list.name}</p>
+            <div class="title-container">
+                <i class="button-expand fa-solid fa-angle-up"></i>
+                <p class="list-title">${list.name}</p>
+            </div>
             <div class="carousel-controls">
                 <button class="del">
                     <i class="fa-regular fa-trash-can"></i>
@@ -464,16 +487,19 @@ function listOnClick() {
         let mouseX = 0
         const maxScrollWidth = content.scrollWidth - content.clientWidth / 2 - content.clientWidth / 2
 
+        const expandListButton = component.querySelector('.button-expand')
         const nextButton = component.querySelector('.next')
         const prevButton = component.querySelector('.prev')
         const addButton = component.querySelector('.add')
         const delButton = component.querySelector('.del')
 
+        expandListButton?.removeEventListener('click', expandButtonClickHandler);
         delButton?.removeEventListener('click', delButtonClickHandler);
         addButton?.removeEventListener('click', addButtonClickHandler);
         nextButton?.removeEventListener('click', nextButtonClickHandler);
         prevButton?.removeEventListener('click', prevButtonClickHandler);
 
+        expandListButton?.addEventListener('click', expandButtonClickHandler);
         delButton?.addEventListener('click', delButtonClickHandler);
         addButton?.addEventListener('click', addButtonClickHandler);
         nextButton?.addEventListener('click', nextButtonClickHandler);

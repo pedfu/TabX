@@ -15,3 +15,6 @@ A chrome extension to help you manage pages while makes you feel in a video game
    ![image](https://github.com/pedfu/TabX/assets/93268313/ecf64c83-2a16-425d-a9cb-3bffdda5f129)
 
 Adicionar um expandir? e comprimir na lista
+Modla de confirmacao no deletar
+corrigir expandir no modal de adicioan item
+btoao direito com modal de confirmacao no deletar item
