@@ -35,6 +35,37 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
 }
 
 
+/* RIGHT CLICK MODAL */
+.modal-options {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 9;
+    border-radius: 0.2rem;
+}
+.modal-options ul {
+    list-style-type: none;
+    padding: 0.25rem 0;
+    margin: 0;
+}
+.modal-options ul li {
+    padding: 0.25rem .75rem;
+    cursor: pointer;
+}
+.modal-options ul li:hover {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.modal-content {
+    max-width: 300px;
+    margin: 0 auto;
+}
+
+
 /* CREATE MODAL */
 .modal {
     /* display: none; */
@@ -177,6 +208,20 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+}
+
+#add-list {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    padding: .5rem;
+    border: 1px solid black;
+    cursor: pointer;
+    margin-left: 20px;
+    font-size: 1rem;
+}
+#add-list:hover {
+    background-color: rgba(0, 0, 0, .1);
 }
 
 .profile, .middleNav, .otherInfos {

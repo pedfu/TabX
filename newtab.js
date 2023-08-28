@@ -13,44 +13,285 @@ var wasDragging = false
 
 var canDrag = false
 
-var currentId;
+var currentId = 0;
+var currentItemId = 0;
 var modalAddItem = null
 
-const listExample = [
-    {
-        id: 1, 
-        name: 'ChapGPT',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        showLogo: true,
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
-    {
-        id: 2, 
-        name: 'ChapGPT2',
-        logo: 'https://seeklogo.com/images/C/chatgpt-logo-02AFA704B5-seeklogo.com.png',
-        url: 'https://chat.openai.com/',
-        showLogo: true,
-        backgroundColor: '#444444',
-        backgroundImage: null,
-    },
+const rightClickOptions = [
+    'Edit',
+    'Delete'
 ]
 
-const l = [
-    {
-        id: 1,
-        name: 'lista 1',
-        description: 'aaaa',
-        order: 1,
-        items: listExample
-    }
-]
+const example = [{
+    "id":2,
+    "name":"teste1",
+    "description":"",
+    "order":2,
+    "items":[
+       {
+          "id":0,
+          "name":"JW",
+          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/&size=16",
+          "url":"https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/",
+          "backgroundColor":"#49f1fd",
+          "backgroundImage":null,
+          "showLogo":true
+       },
+       {
+          "id":1,
+          "name":"teste1",
+          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.google.com&size=16",
+          "url":"https://www.google.com",
+          "backgroundColor":"#c59b9b",
+          "backgroundImage":null,
+          "showLogo":true
+       },
+       {
+          "id":2,
+          "name":"teste nova lista",
+          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/&size=16",
+          "url":"https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/",
+          "backgroundColor":"#000000",
+          "backgroundImage":null,
+          "showLogo":true
+       },
+       {
+          "id":3,
+          "name":"teste",
+          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/&size=16",
+          "url":"https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/",
+          "backgroundColor":"#fd2121",
+          "backgroundImage":null,
+          "showLogo":true
+       }
+    ]
+ }]
+
 
 if (!localStorage.getItem('lists')) {
-    localStorage.setItem('lists', JSON.stringify(l))
+    localStorage.setItem('lists', JSON.stringify(example))
 }
 var lists = JSON.parse(localStorage.getItem('lists'))
+
+function modalOptionClickHandler(event) {
+    event.preventDefault();
+    const modal = document.getElementById('modal-options');
+    const optionsContainer = modal.querySelector('ul')
+    const component = event.currentTarget.closest('.carousel-wrapper');
+    const itemElement = event.currentTarget.closest('li');
+
+    console.log('teste', component, itemElement)
+    const id = Number(component.id.replace('list-', ''));
+    const itemId = Number(itemElement.id.replace('item-', ''));
+    currentId = id
+    currentItemId = itemId
+
+    const item = lists.find(i => i.id === currentId)?.items?.find(i => i.id === currentItemId)
+
+    const x = event.clientX;
+    const y = event.clientY;
+    
+    modal.style.display = 'block';
+    modal.style.left = x + 'px';
+    modal.style.top = y + 'px';
+
+    console.log(item, currentId, currentItemId)
+
+    // ADICIONAR ITEM E LSIT ID
+    modal.removeEventListener('click', (event) => optionClickHandler(event, item));
+    modal.addEventListener('click', (event) => optionClickHandler(event, item));
+}
+
+function editItemInputListeners(item) {
+    const nameInput = document.getElementById('name-input')
+    const urlInput = document.getElementById('url-input')
+    const backgroundColorInput = document.getElementById('backgroundColor-input')
+    const fileInput = document.getElementById('fileInput')
+    const selectedImage = document.getElementById('selected-image')
+    const showLogoInput = document.getElementById('show-logo')
+    
+    const previewItem = document.getElementById('preview-item')
+    const previewImage = document.getElementById('preview-image')
+    const previewFavicon = document.getElementById('preview-favicon')
+    const previewItemName = document.getElementById('preview-item-name')
+    const expandButton = document.getElementById('preview-expand')
+    const expandIcon = document.getElementById('expand-icon')
+
+    nameInput.value = item?.name
+    urlInput.value = item?.url
+    fileInput.value = ''
+    selectedImage.src = ''
+    previewImage.src = item?.backgroundImage
+    previewFavicon.src = item?.logo
+    previewImage.style.backgroundColor = item?.backgroundColor
+    backgroundColorInput.value = item?.backgroundColor || '#000000'
+    showLogoInput.checked = item?.showLogo
+    
+    const submitButton = document.getElementById('submit')
+    const closeButton = document.getElementById('close')
+
+    const backgroundModal = document.getElementById('background-modal')
+    const modalContainer = document.getElementById('add-modal-container')
+    const modal = document.getElementById('add-modal')
+
+    // prevent close modal on click modal
+    modal.addEventListener('click', (event) => {
+        event.stopPropagation()
+    })
+    backgroundModal.addEventListener('click', (event) => {
+        modalContainer.classList.add('hidden')
+    })
+
+    showLogoInput.addEventListener('change', (event) => {
+        if (!event.target.checked) {
+            previewFavicon.style.display = 'none'
+        } else {
+            previewFavicon.style.display = 'block'
+        }
+    })
+
+    expandButton.addEventListener('click', (event) => {
+        if (expandIcon.classList.contains('fa-angle-left')) {
+            expandButton.setAttribute('title', 'Show preview')
+            expandIcon.classList.remove('fa-angle-left')
+            expandIcon.classList.add('fa-angle-right')
+            previewItem.classList.add('hidden')
+        } else {
+            expandButton.setAttribute('title', 'Hide preview')
+            expandIcon.classList.remove('fa-angle-right')
+            expandIcon.classList.add('fa-angle-left')
+            previewItem.classList.remove('hidden')
+        }
+    })
+
+    backgroundColorInput.addEventListener('change', (event) => {
+        previewImage.style.display = 'block'
+        previewImage.style.backgroundColor = event.target.value
+    })
+
+    nameInput.addEventListener('change', (event) => {
+        previewItemName.innerText = event.target.value
+    })
+    
+    urlInput.addEventListener('change', (event) => {
+        const url = event.target.value
+        
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
+        if (urlRegex.test(url)) {
+            const favicon = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
+            previewFavicon.style.display = 'block'
+            previewFavicon.src = favicon
+        }
+    })
+
+    
+    fileInput.addEventListener('change', (event) => {
+        const fileInput = event.target;
+        const selectedFile = fileInput.files[0];
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                fileInput.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedImage.src = event.target.result;
+
+                previewImage.style.display = 'block'
+                previewImage.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    })
+    
+    submitButton.addEventListener('click', async (event) => {
+        event.preventDefault()
+        const name = nameInput?.value
+        const url = urlInput?.value
+        const bgColor = backgroundColorInput?.value
+        const bgImage = fileInput?.files[0];
+        const showLogo = showLogoInput?.checked;
+
+        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
+        if (name && url && urlRegex.test(url)) {
+            // create - add to list and load updated list
+            // use currentId to update list saved on localhost
+            const listItem = lists?.find(l => l.id === currentId)
+            if (listItem) {
+                const items = listItem?.items
+                const id = Number(items[items?.length - 1]?.id) + 1
+                const logoUrl = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
+                const newItem = {
+                    id: id, 
+                    name: name,
+                    logo: logoUrl,
+                    url: url,
+                    backgroundColor: bgColor,
+                    backgroundImage: null,
+                    showLogo: showLogo || false,
+                }
+                
+                if (bgImage) {
+                    const imageDataUrl = await readImageAsDataUrl(bgImage)
+                    newItem.backgroundImage 
+= imageDataUrl
+                }
+                
+                listItem?.items?.push(newItem)
+                const othersLists = lists?.filter(l => l.id !== currentId)
+                lists = [...othersLists, listItem].sort((a, b) => a?.id - b?.id)
+                addItemToList(currentId, newItem)
+                // listOnClick()
+
+                localStorage.setItem('lists', JSON.stringify(lists))
+
+                modalContainer.classList.add('hidden')
+                nameInput.value = ''
+                urlInput.value = ''
+                fileInput.value = ''
+                selectedImage.src = ''
+                previewImage.src = ''
+                previewFavicon.src = ''
+                previewImage.style.backgroundColor = ''
+                backgroundColorInput.value = '#000000'
+                showLogoInput.checked = true
+            }
+        } else {
+            window.alert('Name and/or URL are not fulfilled')
+            console.error('not create')            
+        }
+    })
+}
+
+function openEditModal(item) {
+    editItemInputListeners(item);
+    if (!modalAddItem) modalAddItem = document.getElementById('add-modal-container')
+    modalAddItem.classList.remove('hidden');
+}
+
+function performAction (option, item) {
+    console.log('action', option, item)
+    // Edit -> open creation modal with pre filled data
+    // Delete acitons -> open confirmation modal and then delete
+    if (option === 'Edit') {
+        openEditModal(item)
+    }
+
+}
+
+function optionClickHandler(event, item) {
+    console.log('click', event, item)
+    const option = event.target.textContent
+    if (rightClickOptions.find(x => x === option)) {
+        performAction(option, item);
+    }
+}
 
 function delButtonClickHandler(event) {
     const filteredList = lists.filter(x => x?.id !== id).sort((a, b) => a?.id - b?.id)
@@ -191,7 +432,9 @@ function loadLists() {
         ul.classList.add('carousel-content')
 
         list.items.forEach(i => {
+            console.log(i)
             const li = document.createElement('li')
+            li.id = `item-${i?.id}`
             li.classList.add('carousel-item')
             li.style.background = `url("${i?.backgroundImage}") center / cover no-repeat, ${i?.backgroundColor}`
 
@@ -224,6 +467,8 @@ function loadLists() {
                     isDragging = false
                 }
             })
+
+            li.addEventListener('contextmenu', modalOptionClickHandler);
 
             itemname.append(name)
             // link.append(img, itemname)
@@ -278,6 +523,8 @@ function addItemToList(id, newItem) {
         }
     })
 
+    li.addEventListener('contextmenu', modalOptionClickHandler);
+
     itemname.append(name)
     // link.append(img, itemname)
     // li.append(link)
@@ -311,6 +558,12 @@ function addListInputListeners() {
     const closeButton = document.getElementById('#add-list-modal-container #close')
 
     const backgroundModal = document.getElementById('add-list-modal-container')
+
+    backgroundModal.addEventListener('click', (event) => {
+        if (event.target?.id === 'background-list-modal') {
+            backgroundModal.classList.add('hidden')
+        }
+    })
 
     submitButton.addEventListener('click', (event) => {
         event.preventDefault()
@@ -347,15 +600,25 @@ function addItemInputListeners() {
     const selectedImage = document.getElementById('selected-image')
     const showLogoInput = document.getElementById('show-logo')
     
-    const submitButton = document.getElementById('submit')
-    const closeButton = document.getElementById('close')
-    
     const previewItem = document.getElementById('preview-item')
     const previewImage = document.getElementById('preview-image')
     const previewFavicon = document.getElementById('preview-favicon')
     const previewItemName = document.getElementById('preview-item-name')
     const expandButton = document.getElementById('preview-expand')
     const expandIcon = document.getElementById('expand-icon')
+
+    nameInput.value = ''
+    urlInput.value = ''
+    fileInput.value = ''
+    selectedImage.src = ''
+    previewImage.src = ''
+    previewFavicon.src = ''
+    previewImage.style.backgroundColor = ''
+    backgroundColorInput.value = '#000000'
+    showLogoInput.checked = true
+    
+    const submitButton = document.getElementById('submit')
+    const closeButton = document.getElementById('close')
 
     const backgroundModal = document.getElementById('background-modal')
     const modalContainer = document.getElementById('add-modal-container')
@@ -593,11 +856,17 @@ function listOnClick() {
 window.addEventListener('load', () => {
     const clock = document.getElementById('clock')
     const addList = document.getElementById('add-list')
+    const optionsModal = document.getElementById('modal-options')
     addListInputListeners()
 
     addList.addEventListener('click', () => {
         const addListModal = document.getElementById('add-list-modal-container')
         addListModal.classList.remove('hidden')
+    })
+
+    window.addEventListener('click', (event) => {
+        if (event.target === optionsModal) return;
+        optionsModal.style.display = 'none';
     })
 
     loadLists()
