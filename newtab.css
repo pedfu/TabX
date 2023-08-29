@@ -111,6 +111,14 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
 }
 
 /* MODAL ADD ITEM */
+.custom-logo-label {
+    display: block;
+    width: calc(100% - 2.25rem);
+    height: 100px;
+    border: 2px dashed #aaa;
+    text-align: center;
+    cursor: pointer;
+}
 .custom-file-label {
     display: block;
     width: calc(100% - 2.25rem);
@@ -118,6 +126,13 @@ p, h1, h2, h3, h4, h5, h6, span, img, a {
     border: 2px dashed #aaa;
     text-align: center;
     cursor: pointer;
+}
+#selected-logo {
+    max-height: calc(100% - 1.1rem);
+    max-width: 100%;
+    margin: 0 auto;
+    object-fit: contain;
+    display: block;
 }
 #selected-image {
     max-width: 100%;

@@ -32,6 +32,24 @@
             <label for="url-input">URL of the website:</label>
             <input name="url" id="url-input" type="url" />
 
+            <label for="logoImage">Logo image (Optional):</label>
+            <label for="logoImage" class="custom-logo-label">
+              Choose a PNG, JPG, or JPEG file
+              <img
+                src="#"
+                alt="Selected Image"
+                id="selected-logo"
+                onerror="this.style.display='none'"
+              />
+            </label>
+            <input
+              name="logoImage"
+              type="file"
+              id="logoImage"
+              accept=".png, .jpg, .jpeg"
+              style="display: none"
+            />
+
             <label for="show-logo">Show logo:</label>
             <input type="checkbox" id="show-logo" checked />
 

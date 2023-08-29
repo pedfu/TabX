@@ -106,6 +106,8 @@ function editItemInputListeners(item) {
     const nameInput = document.getElementById('name-input')
     const urlInput = document.getElementById('url-input')
     const backgroundColorInput = document.getElementById('backgroundColor-input')
+    const logoInput = document.getElementById('logoImage')
+    const selectedLogo = document.getElementById('selected-logo')
     const fileInput = document.getElementById('fileInput')
     const selectedImage = document.getElementById('selected-image')
     const showLogoInput = document.getElementById('show-logo')
@@ -119,6 +121,8 @@ function editItemInputListeners(item) {
 
     nameInput.value = item?.name
     urlInput.value = item?.url
+    logoInput.value = ''
+    selectedLogo.src = ''
     fileInput.value = ''
     selectedImage.src = ''
     previewImage.src = item?.backgroundImage
@@ -173,18 +177,6 @@ function editItemInputListeners(item) {
         previewItemName.innerText = event.target.value
     })
     
-    urlInput.addEventListener('change', (event) => {
-        const url = event.target.value
-        
-        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
-        if (urlRegex.test(url)) {
-            const favicon = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
-            previewFavicon.style.display = 'block'
-            previewFavicon.src = favicon
-        }
-    })
-
-    
     fileInput.addEventListener('change', (event) => {
         const fileInput = event.target;
         const selectedFile = fileInput.files[0];
@@ -210,12 +202,39 @@ function editItemInputListeners(item) {
         }
     })
     
+    logoInput.addEventListener('change', (event) => {
+        const input = event.target;
+        const selectedFile = input.files[0];
+        console.log(event, selectedFile)
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedLogo.src = event.target.result;
+
+                previewFavicon.style.display = 'block'
+                previewFavicon.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    })
+    
     submitButton.addEventListener('click', async (event) => {
         event.preventDefault()
         const name = nameInput?.value
         const url = urlInput?.value
         const bgColor = backgroundColorInput?.value
         const bgImage = fileInput?.files[0];
+        const logoImage = logoInput?.files[0];
         const showLogo = showLogoInput?.checked;
 
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
@@ -226,11 +245,10 @@ function editItemInputListeners(item) {
             if (listItem) {
                 const items = listItem?.items
                 const id = Number(items[items?.length - 1]?.id) + 1
-                const logoUrl = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
                 const newItem = {
                     id: id, 
                     name: name,
-                    logo: logoUrl,
+                    logo: logoImage,
                     url: url,
                     backgroundColor: bgColor,
                     backgroundImage: null,
@@ -255,6 +273,8 @@ function editItemInputListeners(item) {
                 nameInput.value = ''
                 urlInput.value = ''
                 fileInput.value = ''
+                logoInput.value = ''
+                selectedLogo.src = ''
                 selectedImage.src = ''
                 previewImage.src = ''
                 previewFavicon.src = ''
@@ -596,6 +616,8 @@ function addItemInputListeners() {
     const nameInput = document.getElementById('name-input')
     const urlInput = document.getElementById('url-input')
     const backgroundColorInput = document.getElementById('backgroundColor-input')
+    const logoInput = document.getElementById('logoImage')
+    const selectedLogo = document.getElementById('selected-logo')
     const fileInput = document.getElementById('fileInput')
     const selectedImage = document.getElementById('selected-image')
     const showLogoInput = document.getElementById('show-logo')
@@ -609,7 +631,9 @@ function addItemInputListeners() {
 
     nameInput.value = ''
     urlInput.value = ''
+    logoInput.value = ''
     fileInput.value = ''
+    selectedLogo.src = ''
     selectedImage.src = ''
     previewImage.src = ''
     previewFavicon.src = ''
@@ -662,18 +686,32 @@ function addItemInputListeners() {
     nameInput.addEventListener('change', (event) => {
         previewItemName.innerText = event.target.value
     })
-    
-    urlInput.addEventListener('change', (event) => {
-        const url = event.target.value
-        
-        const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
-        if (urlRegex.test(url)) {
-            const favicon = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
-            previewFavicon.style.display = 'block'
-            previewFavicon.src = favicon
+
+    logoInput.addEventListener('change', (event) => {
+        const input = event.target;
+        const selectedFile = input.files[0];
+        console.log(event, selectedFile)
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedLogo.src = event.target.result;
+
+                previewFavicon.style.display = 'block'
+                previewFavicon.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
         }
     })
-
     
     fileInput.addEventListener('change', (event) => {
         const fileInput = event.target;
@@ -706,6 +744,7 @@ function addItemInputListeners() {
         const url = urlInput?.value
         const bgColor = backgroundColorInput?.value
         const bgImage = fileInput?.files[0];
+        const logoImage = logoInput?.files[0];
         const showLogo = showLogoInput?.checked;
 
         const urlRegex = /^(ftp|http|https):\/\/[^ "]+$/
@@ -716,11 +755,10 @@ function addItemInputListeners() {
             if (listItem) {
                 const items = listItem?.items
                 const id = Number(items[items?.length - 1]?.id) + 1
-                const logoUrl = `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=16`
                 const newItem = {
                     id: id, 
                     name: name,
-                    logo: logoUrl,
+                    logo: logoImage,
                     url: url,
                     backgroundColor: bgColor,
                     backgroundImage: null,
@@ -745,6 +783,8 @@ function addItemInputListeners() {
                 nameInput.value = ''
                 urlInput.value = ''
                 fileInput.value = ''
+                logoInput.value = ''
+                selectedLogo.src = ''
                 selectedImage.src = ''
                 previewImage.src = ''
                 previewFavicon.src = ''
