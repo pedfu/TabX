@@ -175,9 +175,9 @@ function editItemInputListeners(item) {
     if (!submitButton) submitButton = document.getElementById('submit')
     if (!closeButton) closeButton = document.getElementById('close')
     if (!modalContainer) {
-        const backgroundModal = document.getElementById('background-modal')
-        const modalContainer = document.getElementById('add-modal-container')
-        const modal = document.getElementById('add-modal')
+        backgroundModal = document.getElementById('background-modal')
+        modalContainer = document.getElementById('add-modal-container')
+        modal = document.getElementById('add-modal')
     }
 
     // prevent close modal on click modal
@@ -355,6 +355,8 @@ function optionClickHandler(event, item) {
 }
 
 function delButtonClickHandler(event) {
+    const closestComponent = event.target.closest('.carousel-wrapper')
+    const id = Number(closestComponent.id.replace('list-', ''))
     const filteredList = lists.filter(x => x?.id !== id).sort((a, b) => a?.id - b?.id)
     // remove from lists
     lists = filteredList
@@ -683,6 +685,14 @@ function addItemInputListeners() {
     backgroundColorInput.value = '#000000'
     showLogoInput.checked = true
 
+    if (!submitButton) submitButton = document.getElementById('submit')
+    if (!closeButton) closeButton = document.getElementById('close')
+    if (!modalContainer || !modalContainer || !modal) {
+        backgroundModal = document.getElementById('background-modal')
+        modalContainer = document.getElementById('add-modal-container')
+        modal = document.getElementById('add-modal')
+    }
+
     // prevent close modal on click modal
     modal.addEventListener('click', (event) => {
         event.stopPropagation()
@@ -793,7 +803,7 @@ function addItemInputListeners() {
             const listItem = lists?.find(l => l.id === currentId)
             if (listItem) {
                 const items = listItem?.items
-                const id = Number(items[items?.length - 1]?.id) + 1
+                const id = items?.length + 1
                 const newItem = {
                     id: id, 
                     name: name,
