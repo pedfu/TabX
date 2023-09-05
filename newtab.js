@@ -8,14 +8,54 @@
 // listOnClick()
 
 
-var isDragging = false
-var wasDragging = false
+let isDragging = false
+let wasDragging = false
 
-var canDrag = false
+let canDrag = false
 
-var currentId = 0;
-var currentItemId = 0;
-var modalAddItem = null
+let currentId = 0;
+let currentItemId = 0;
+let modalAddItem = null
+
+// modal for edit and delete (appear when right click)
+let modalOptions = document.getElementById('modal-options');
+
+// modal add/edit listeners
+let nameInput = document.getElementById('name-input')
+let urlInput = document.getElementById('url-input')
+let backgroundColorInput = document.getElementById('backgroundColor-input')
+let logoInput = document.getElementById('logoImage')
+let selectedLogo = document.getElementById('selected-logo')
+let fileInput = document.getElementById('fileInput')
+let selectedImage = document.getElementById('selected-image')
+let showLogoInput = document.getElementById('show-logo')
+let previewItem = document.getElementById('preview-item')
+let previewImage = document.getElementById('preview-image')
+let previewFavicon = document.getElementById('preview-favicon')
+let previewItemName = document.getElementById('preview-item-name')
+let expandButton = document.getElementById('preview-expand')
+let expandIcon = document.getElementById('expand-icon')
+let submitButton = document.getElementById('submit')
+let closeButton = document.getElementById('close')
+let backgroundModal = document.getElementById('background-modal')
+let modal = document.getElementById('add-modal')
+
+// carousel container
+let container = document.getElementById('carousel-container')
+let modalContainer = document.getElementById('add-modal-container')
+
+// add list modal listeners
+let nameListInput = document.getElementById('name-list-input')
+let submitListButton = document.querySelector('#add-list-modal-container #submit')
+let closeListButton = document.getElementById('#add-list-modal-container #close')
+let addListModal = document.getElementById('add-list-modal-container')
+
+// components
+let components = document.querySelectorAll('.carousel-wrapper')
+
+// others elements
+let clock = document.getElementById('clock')
+let addList = document.getElementById('add-list')
 
 const rightClickOptions = [
     'Edit',
@@ -75,12 +115,11 @@ var lists = JSON.parse(localStorage.getItem('lists'))
 
 function modalOptionClickHandler(event) {
     event.preventDefault();
-    const modal = document.getElementById('modal-options');
-    const optionsContainer = modal.querySelector('ul')
+    if (!modalOptions) modalOptions = document.getElementById('modal-options');
+    const optionsContainer = modalOptions.querySelector('ul')
     const component = event.currentTarget.closest('.carousel-wrapper');
     const itemElement = event.currentTarget.closest('li');
 
-    console.log('teste', component, itemElement)
     const id = Number(component.id.replace('list-', ''));
     const itemId = Number(itemElement.id.replace('item-', ''));
     currentId = id
@@ -91,33 +130,32 @@ function modalOptionClickHandler(event) {
     const x = event.clientX;
     const y = event.clientY;
     
-    modal.style.display = 'block';
-    modal.style.left = x + 'px';
-    modal.style.top = y + 'px';
-
-    console.log(item, currentId, currentItemId)
+    modalOptions.style.display = 'block';
+    modalOptions.style.left = x + 'px';
+    modalOptions.style.top = y + 'px';
 
     // ADICIONAR ITEM E LSIT ID
-    modal.removeEventListener('click', (event) => optionClickHandler(event, item));
-    modal.addEventListener('click', (event) => optionClickHandler(event, item));
+    modalOptions.removeEventListener('click', (event) => optionClickHandler(event, item));
+    modalOptions.addEventListener('click', (event) => optionClickHandler(event, item));
 }
 
 function editItemInputListeners(item) {
-    const nameInput = document.getElementById('name-input')
-    const urlInput = document.getElementById('url-input')
-    const backgroundColorInput = document.getElementById('backgroundColor-input')
-    const logoInput = document.getElementById('logoImage')
-    const selectedLogo = document.getElementById('selected-logo')
-    const fileInput = document.getElementById('fileInput')
-    const selectedImage = document.getElementById('selected-image')
-    const showLogoInput = document.getElementById('show-logo')
-    
-    const previewItem = document.getElementById('preview-item')
-    const previewImage = document.getElementById('preview-image')
-    const previewFavicon = document.getElementById('preview-favicon')
-    const previewItemName = document.getElementById('preview-item-name')
-    const expandButton = document.getElementById('preview-expand')
-    const expandIcon = document.getElementById('expand-icon')
+    if (!nameInput || !previewImage) {
+        nameInput = document.getElementById('name-input')
+        urlInput = document.getElementById('url-input')
+        backgroundColorInput = document.getElementById('backgroundColor-input')
+        logoInput = document.getElementById('logoImage')
+        selectedLogo = document.getElementById('selected-logo')
+        fileInput = document.getElementById('fileInput')
+        selectedImage = document.getElementById('selected-image')
+        showLogoInput = document.getElementById('show-logo')        
+        previewItem = document.getElementById('preview-item')
+        previewImage = document.getElementById('preview-image')
+        previewFavicon = document.getElementById('preview-favicon')
+        previewItemName = document.getElementById('preview-item-name')
+        expandButton = document.getElementById('preview-expand')
+        expandIcon = document.getElementById('expand-icon')
+    }
 
     nameInput.value = item?.name
     urlInput.value = item?.url
@@ -131,12 +169,16 @@ function editItemInputListeners(item) {
     backgroundColorInput.value = item?.backgroundColor || '#000000'
     showLogoInput.checked = item?.showLogo
     
-    const submitButton = document.getElementById('submit')
-    const closeButton = document.getElementById('close')
+    // const submitButton = document.getElementById('submit')
+    // const closeButton = document.getElementById('close')
 
-    const backgroundModal = document.getElementById('background-modal')
-    const modalContainer = document.getElementById('add-modal-container')
-    const modal = document.getElementById('add-modal')
+    if (!submitButton) submitButton = document.getElementById('submit')
+    if (!closeButton) closeButton = document.getElementById('close')
+    if (!modalContainer) {
+        const backgroundModal = document.getElementById('background-modal')
+        const modalContainer = document.getElementById('add-modal-container')
+        const modal = document.getElementById('add-modal')
+    }
 
     // prevent close modal on click modal
     modal.addEventListener('click', (event) => {
@@ -207,7 +249,6 @@ function editItemInputListeners(item) {
     logoInput.addEventListener('change', (event) => {
         const input = event.target;
         const selectedFile = input.files[0];
-        console.log(event, selectedFile)
         if (selectedFile) {
             const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
 
@@ -298,7 +339,6 @@ function openEditModal(item) {
 }
 
 function performAction (option, item) {
-    console.log('action', option, item)
     // Edit -> open creation modal with pre filled data
     // Delete acitons -> open confirmation modal and then delete
     if (option === 'Edit') {
@@ -308,7 +348,6 @@ function performAction (option, item) {
 }
 
 function optionClickHandler(event, item) {
-    console.log('click', event, item)
     const option = event.target.textContent
     if (rightClickOptions.find(x => x === option)) {
         performAction(option, item);
@@ -403,7 +442,7 @@ function formatNumber(number) {
 function loadLists() {
     // const lists = localStorage.getItem("lists") || listsExample
     // const lists = listsExample
-    const container = document.getElementById('carousel-container')
+    if (!container) container = document.getElementById('carousel-container')
     container.innerHTML = ''
     const sortedList = lists.sort((a, b) => a.order - b.order)
     for(var i=0; i<sortedList.length; i++) {
@@ -454,7 +493,6 @@ function loadLists() {
         ul.classList.add('carousel-content')
 
         list.items.forEach(i => {
-            console.log(i)
             const li = document.createElement('li')
             li.id = `item-${i?.id}`
             li.classList.add('carousel-item')
@@ -505,8 +543,8 @@ function loadLists() {
 }
 
 function addItemToList(id, newItem) {
-    const container = document.getElementById('carousel-container')
-    const modalContainer = document.getElementById('add-modal-container')
+    if (!container) container = document.getElementById('carousel-container')
+    if (!modalContainer) modalContainer = document.getElementById('add-modal-container')
     const list = lists[id]
     const wrapper = document.getElementById('list-' + id)
     
@@ -575,15 +613,16 @@ function readImageAsDataUrl(file) {
   }
 
 function addListInputListeners() {
-    const nameInput = document.getElementById('name-list-input')
-    const submitButton = document.querySelector('#add-list-modal-container #submit')
-    const closeButton = document.getElementById('#add-list-modal-container #close')
+    if (!nameListInput || !addListModal) {
+        nameInput = document.getElementById('name-list-input')
+        submitButton = document.querySelector('#add-list-modal-container #submit')
+        closeButton = document.getElementById('#add-list-modal-container #close')    
+        addListModal = document.getElementById('add-list-modal-container')
+    }
 
-    const backgroundModal = document.getElementById('add-list-modal-container')
-
-    backgroundModal.addEventListener('click', (event) => {
+    addListModal.addEventListener('click', (event) => {
         if (event.target?.id === 'background-list-modal') {
-            backgroundModal.classList.add('hidden')
+            addListModal.classList.add('hidden')
         }
     })
 
@@ -607,7 +646,7 @@ function addListInputListeners() {
 
         lists = [...sortedList, newItem]
         localStorage.setItem('lists', JSON.stringify([...sortedList, newItem]))
-        backgroundModal.classList.add('hidden')
+        addListModal.classList.add('hidden')
         nameInput.value = ''
         loadLists() // add list to screen instead of reloading all
         listOnClick()
@@ -615,20 +654,22 @@ function addListInputListeners() {
 }
 
 function addItemInputListeners() {
-    const nameInput = document.getElementById('name-input')
-    const urlInput = document.getElementById('url-input')
-    const backgroundColorInput = document.getElementById('backgroundColor-input')
-    const logoInput = document.getElementById('logoImage')
-    const selectedLogo = document.getElementById('selected-logo')
-    const fileInput = document.getElementById('fileInput')
-    const selectedImage = document.getElementById('selected-image')
-    const showLogoInput = document.getElementById('show-logo')
-    
-    const previewItem = document.getElementById('preview-item')
-    const previewImage = document.getElementById('preview-image')
-    const previewFavicon = document.getElementById('preview-favicon')
-    const previewItemName = document.getElementById('preview-item-name')
-    const expandButton = document.getElementById('preview-expand')
+    if (!nameInput || !previewItem) {
+        nameInput = document.getElementById('name-input')
+        urlInput = document.getElementById('url-input')
+        backgroundColorInput = document.getElementById('backgroundColor-input')
+        logoInput = document.getElementById('logoImage')
+        selectedLogo = document.getElementById('selected-logo')
+        fileInput = document.getElementById('fileInput')
+        selectedImage = document.getElementById('selected-image')
+        showLogoInput = document.getElementById('show-logo')
+        
+        previewItem = document.getElementById('preview-item')
+        previewImage = document.getElementById('preview-image')
+        previewFavicon = document.getElementById('preview-favicon')
+        previewItemName = document.getElementById('preview-item-name')
+        expandButton = document.getElementById('preview-expand')
+    } 
 
     nameInput.value = ''
     urlInput.value = ''
@@ -641,13 +682,6 @@ function addItemInputListeners() {
     previewImage.style.backgroundColor = ''
     backgroundColorInput.value = '#000000'
     showLogoInput.checked = true
-    
-    const submitButton = document.getElementById('submit')
-    const closeButton = document.getElementById('close')
-
-    const backgroundModal = document.getElementById('background-modal')
-    const modalContainer = document.getElementById('add-modal-container')
-    const modal = document.getElementById('add-modal')
 
     // prevent close modal on click modal
     modal.addEventListener('click', (event) => {
@@ -695,7 +729,6 @@ function addItemInputListeners() {
     logoInput.addEventListener('change', (event) => {
         const input = event.target;
         const selectedFile = input.files[0];
-        console.log(event, selectedFile)
         if (selectedFile) {
             const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
 
@@ -714,6 +747,7 @@ function addItemInputListeners() {
                 previewFavicon.src = event.target.result;
             };
 
+            reader.readAsText(selectedFile);
             reader.readAsDataURL(selectedFile);
         }
     })
@@ -805,9 +839,9 @@ function addItemInputListeners() {
 }
 
 function listOnClick() {
-    const components = document.querySelectorAll('.carousel-wrapper')
-    const modalContainer = document.getElementById('add-modal-container')
-    
+    components = document.querySelectorAll('.carousel-wrapper')
+    if (!modalContainer) modalContainer = document.getElementById('add-modal-container')
+
     for(let i=0; i<components?.length; i++) {
         const component = components[i]
         const id = Number(component.id.replace('list-', ''))
@@ -899,19 +933,19 @@ function listOnClick() {
 }
 
 window.addEventListener('load', () => {
-    const clock = document.getElementById('clock')
-    const addList = document.getElementById('add-list')
-    const optionsModal = document.getElementById('modal-options')
+    if (!clock) clock = document.getElementById('clock')
+    if (!addList) addList = document.getElementById('add-list')
+    if (!modalOptions) modalOptions = document.getElementById('modal-options')
     addListInputListeners()
 
     addList.addEventListener('click', () => {
-        const addListModal = document.getElementById('add-list-modal-container')
+        if (!addListModal) addListModal = document.getElementById('add-list-modal-container')
         addListModal.classList.remove('hidden')
     })
 
     window.addEventListener('click', (event) => {
-        if (event.target === optionsModal) return;
-        optionsModal.style.display = 'none';
+        if (event.target === modalOptions) return;
+        modalOptions.style.display = 'none';
     })
 
     loadLists()
