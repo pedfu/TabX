@@ -172,18 +172,12 @@ function editItemInputListeners(item) {
     previewImage.style.backgroundColor = item?.backgroundColor
     backgroundColorInput.value = item?.backgroundColor || '#000000'
     showLogoInput.checked = item?.showLogo
-    
-    // const submitButton = document.getElementById('submit')
-    // const closeButton = document.getElementById('close')
 
     if (!submitButton) submitButton = document.getElementById('submit')
-    console.log('subsmit', submitButton)
     if (!closeButton) closeButton = document.getElementById('close')
-    if (!modalContainer) {
-        backgroundModal = document.getElementById('background-modal')
-        modalContainer = document.getElementById('add-modal-container')
-        modal = document.getElementById('add-modal')
-    }
+    if (!modalContainer) modalContainer = document.getElementById('add-modal-container')
+    if (!modal) modal = document.getElementById('add-modal')
+    if (!backgroundModal) backgroundModal = document.getElementById('background-modal')
 
     // prevent close modal on click modal
     modal.addEventListener('click', (event) => {
