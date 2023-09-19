@@ -25,3 +25,6 @@ adicionar deletar item
 modificar o nome do botao de submit no modal de criacao
 
 corrigir a adicao de item -> id ficando null -> lista -> item.length + 1 ao inves de pegar o ultimo
+
+corrigir estilos dos botoes
+permitir usuario modificar o background dos botoes

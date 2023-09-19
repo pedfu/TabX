@@ -46,7 +46,7 @@ let modalContainer = document.getElementById('add-modal-container')
 
 // add list modal listeners
 let nameListInput = document.getElementById('name-list-input')
-let submitListButton = document.querySelector('#add-list-modal-container #submit')
+let submitListButton = document.querySelector('#add-list-modal-container #submit-list')
 let closeListButton = document.getElementById('#add-list-modal-container #close')
 let addListModal = document.getElementById('add-list-modal-container')
 
@@ -71,38 +71,42 @@ const example = [{
        {
           "id":0,
           "name":"JW",
-          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/&size=16",
+          "logo":null,
           "url":"https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/",
           "backgroundColor":"#49f1fd",
           "backgroundImage":null,
-          "showLogo":true
+          "showLogo":true,
+          "expanded": true,
        },
        {
           "id":1,
           "name":"teste1",
-          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.google.com&size=16",
+          "logo":null,
           "url":"https://www.google.com",
           "backgroundColor":"#c59b9b",
           "backgroundImage":null,
-          "showLogo":true
+          "showLogo":true,
+          "expanded": true,
        },
        {
           "id":2,
           "name":"teste nova lista",
-          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/&size=16",
+          "logo":null,
           "url":"https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/",
           "backgroundColor":"#000000",
           "backgroundImage":null,
-          "showLogo":true
+          "showLogo":true,
+          "expanded": true,
        },
        {
           "id":3,
           "name":"teste",
-          "logo":"https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/&size=16",
+          "logo":null,
           "url":"https://www.jw.org/pt/noticias/noticias-testemunhas-jeova/",
           "backgroundColor":"#fd2121",
           "backgroundImage":null,
-          "showLogo":true
+          "showLogo":true,
+          "expanded": true,
        }
     ]
  }]
@@ -173,6 +177,7 @@ function editItemInputListeners(item) {
     // const closeButton = document.getElementById('close')
 
     if (!submitButton) submitButton = document.getElementById('submit')
+    console.log('subsmit', submitButton)
     if (!closeButton) closeButton = document.getElementById('close')
     if (!modalContainer) {
         backgroundModal = document.getElementById('background-modal')
@@ -196,82 +201,9 @@ function editItemInputListeners(item) {
         }
     })
 
-    expandButton.addEventListener('click', (event) => {
-        if (expandIcon.classList.contains('fa-angle-left')) {
-            expandButton.setAttribute('title', 'Show preview')
-            expandIcon.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.75 16.25C13.6515 16.2505 13.5538 16.2313 13.4628 16.1935C13.3718 16.1557 13.2893 16.1001 13.22 16.03L9.72001 12.53C9.57956 12.3894 9.50067 12.1988 9.50067 12C9.50067 11.8013 9.57956 11.6107 9.72001 11.47L13.22 8.00003C13.361 7.90864 13.5285 7.86722 13.6958 7.88241C13.8631 7.89759 14.0205 7.96851 14.1427 8.08379C14.2649 8.19907 14.3448 8.35203 14.3697 8.51817C14.3946 8.68431 14.363 8.85399 14.28 9.00003L11.28 12L14.28 15C14.4205 15.1407 14.4994 15.3313 14.4994 15.53C14.4994 15.7288 14.4205 15.9194 14.28 16.06C14.1353 16.1907 13.9448 16.259 13.75 16.25Z" fill="#000000"/>
-            </svg>`
-            previewItem.classList.add('hidden')
-        } else {
-            expandButton.setAttribute('title', 'Hide preview')
-            expandIcon.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.25 16.25C10.1493 16.2466 10.0503 16.2227 9.95921 16.1797C9.86807 16.1367 9.78668 16.0756 9.72001 16C9.57956 15.8594 9.50067 15.6688 9.50067 15.47C9.50067 15.2713 9.57956 15.0806 9.72001 14.94L12.72 11.94L9.72001 8.94002C9.66069 8.79601 9.64767 8.63711 9.68277 8.48536C9.71786 8.33361 9.79933 8.19656 9.91586 8.09322C10.0324 7.98988 10.1782 7.92538 10.3331 7.90868C10.4879 7.89198 10.6441 7.92391 10.78 8.00002L14.28 11.5C14.4205 11.6407 14.4994 11.8313 14.4994 12.03C14.4994 12.2288 14.4205 12.4194 14.28 12.56L10.78 16C10.7133 16.0756 10.6319 16.1367 10.5408 16.1797C10.4497 16.2227 10.3507 16.2466 10.25 16.25Z" fill="#000000"/>
-            </svg>`
-            previewItem.classList.remove('hidden')
-        }
-    })
-
-    backgroundColorInput.addEventListener('change', (event) => {
-        previewImage.style.display = 'block'
-        previewImage.style.backgroundColor = event.target.value
-    })
-
-    nameInput.addEventListener('change', (event) => {
-        previewItemName.innerText = event.target.value
-    })
-    
-    fileInput.addEventListener('change', (event) => {
-        const fileInput = event.target;
-        const selectedFile = fileInput.files[0];
-        if (selectedFile) {
-            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-
-            if (!allowedExtensions.exec(selectedFile.name)) {
-                alert('Please select a valid PNG, JPG, or JPEG file.');
-                fileInput.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                selectedImage.src = event.target.result;
-
-                previewImage.style.display = 'block'
-                previewImage.src = event.target.result;
-            };
-
-            reader.readAsDataURL(selectedFile);
-        }
-    })
-    
-    logoInput.addEventListener('change', (event) => {
-        const input = event.target;
-        const selectedFile = input.files[0];
-        if (selectedFile) {
-            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-
-            if (!allowedExtensions.exec(selectedFile.name)) {
-                alert('Please select a valid PNG, JPG, or JPEG file.');
-                input.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                selectedLogo.src = event.target.result;
-
-                previewFavicon.style.display = 'block'
-                previewFavicon.src = event.target.result;
-            };
-
-            reader.readAsDataURL(selectedFile);
-        }
-    })
-    
-    submitButton.addEventListener('click', async (event) => {
+    const handleSubmitButton = (event) => {
+        debugger;
+        console.log('teste')
         event.preventDefault()
         const name = nameInput?.value
         const url = urlInput?.value
@@ -296,10 +228,15 @@ function editItemInputListeners(item) {
                     backgroundColor: bgColor,
                     backgroundImage: null,
                     showLogo: showLogo || false,
+                    expaded: true,
                 }
+                console.log(newItem)
                 
                 if (bgImage) {
-                    const imageDataUrl = await readImageAsDataUrl(bgImage)
+                    var imageDataUrl = null;
+                    readImageAsDataUrl(bgImage).then(res => {
+                        imageDataUrl = res
+                    })
                     newItem.backgroundImage 
 = imageDataUrl
                 }
@@ -329,7 +266,96 @@ function editItemInputListeners(item) {
             window.alert('Name and/or URL are not fulfilled')
             console.error('not create')            
         }
-    })
+    }
+
+    const handleExpandButton = (event) => {
+        if (expandIcon.classList.contains('fa-angle-left')) {
+            expandButton.setAttribute('title', 'Show preview')
+            expandIcon.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.75 16.25C13.6515 16.2505 13.5538 16.2313 13.4628 16.1935C13.3718 16.1557 13.2893 16.1001 13.22 16.03L9.72001 12.53C9.57956 12.3894 9.50067 12.1988 9.50067 12C9.50067 11.8013 9.57956 11.6107 9.72001 11.47L13.22 8.00003C13.361 7.90864 13.5285 7.86722 13.6958 7.88241C13.8631 7.89759 14.0205 7.96851 14.1427 8.08379C14.2649 8.19907 14.3448 8.35203 14.3697 8.51817C14.3946 8.68431 14.363 8.85399 14.28 9.00003L11.28 12L14.28 15C14.4205 15.1407 14.4994 15.3313 14.4994 15.53C14.4994 15.7288 14.4205 15.9194 14.28 16.06C14.1353 16.1907 13.9448 16.259 13.75 16.25Z" fill="#000000"/>
+            </svg>`
+            previewItem.classList.add('hidden')
+        } else {
+            expandButton.setAttribute('title', 'Hide preview')
+            expandIcon.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.25 16.25C10.1493 16.2466 10.0503 16.2227 9.95921 16.1797C9.86807 16.1367 9.78668 16.0756 9.72001 16C9.57956 15.8594 9.50067 15.6688 9.50067 15.47C9.50067 15.2713 9.57956 15.0806 9.72001 14.94L12.72 11.94L9.72001 8.94002C9.66069 8.79601 9.64767 8.63711 9.68277 8.48536C9.71786 8.33361 9.79933 8.19656 9.91586 8.09322C10.0324 7.98988 10.1782 7.92538 10.3331 7.90868C10.4879 7.89198 10.6441 7.92391 10.78 8.00002L14.28 11.5C14.4205 11.6407 14.4994 11.8313 14.4994 12.03C14.4994 12.2288 14.4205 12.4194 14.28 12.56L10.78 16C10.7133 16.0756 10.6319 16.1367 10.5408 16.1797C10.4497 16.2227 10.3507 16.2466 10.25 16.25Z" fill="#000000"/>
+            </svg>`
+            previewItem.classList.remove('hidden')
+        }
+    }
+
+    const handleBgColorChange = (event) => {
+        previewImage.style.display = 'block'
+        previewImage.style.backgroundColor = event.target.value
+    }
+
+    const handleNameChange = (event) => {
+        previewItemName.innerText = event.target.value
+    }
+
+    const handleLogoChange = (event) => {
+        const input = event.target;
+        const selectedFile = input.files[0];
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedLogo.src = event.target.result;
+
+                previewFavicon.style.display = 'block'
+                previewFavicon.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    }
+
+    const handleFileChange = (event) => {
+        const fileInput = event.target;
+        const selectedFile = fileInput.files[0];
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                fileInput.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedImage.src = event.target.result;
+
+                previewImage.style.display = 'block'
+                previewImage.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    }
+
+    submitButton.removeEventListener('click', handleSubmitButton)
+    expandButton.removeEventListener('click', handleExpandButton)
+    backgroundColorInput.removeEventListener('change', handleBgColorChange)
+    nameInput.removeEventListener('change', handleNameChange)
+    logoInput.removeEventListener('change', handleLogoChange)
+    fileInput.removeEventListener('change', handleFileChange)
+
+    expandButton.addEventListener('click', handleExpandButton)
+    backgroundColorInput.addEventListener('change', handleBgColorChange)
+    nameInput.addEventListener('change', handleNameChange)
+    logoInput.addEventListener('change', handleLogoChange)
+    fileInput.addEventListener('change', handleFileChange)
+    submitButton.addEventListener('click', handleSubmitButton)
 }
 
 function openEditModal(item) {
@@ -368,9 +394,14 @@ function delButtonClickHandler(event) {
 function expandButtonClickHandler(event) {
     const component = event.currentTarget.closest('.carousel-wrapper');
     const content = component.querySelector('.carousel-content')
+    const listId = Number(component?.id?.split('-')[1])
     if (component) {
         const expandListButton = component.querySelector('.button-expand')
         if (expandListButton?.classList.contains('down')) {
+            const index = lists?.findIndex(i => i.id === listId)
+            lists[index].expanded = true
+            localStorage.setItem('lists', JSON.stringify(lists))
+
             expandListButton?.classList.remove('down')
             expandListButton?.classList.add('up')
             expandListButton.innerHTML = `
@@ -380,6 +411,10 @@ function expandButtonClickHandler(event) {
             `
             content.style.height = '13rem'
         } else {
+            const index = lists?.findIndex(i => i.id === listId)
+            lists[index].expanded = false
+            localStorage.setItem('lists', JSON.stringify(lists))
+
             expandListButton?.classList.remove('up')
             expandListButton?.classList.add('down')
             expandListButton.innerHTML = `
@@ -457,12 +492,19 @@ function loadLists() {
         // <i class="fa-solid fa-angle-down"></i>
         const header = document.createElement('div')
         header.classList.add('carousel-header')
+
+        const headerIcon = list.expanded === false ? 
+            `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 9L12 15L18 9" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>` : 
+            `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 15L12 9L18 15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>`
+            
         header.innerHTML = `
             <div class="title-container">
-                <button class="button-expand up">
-                    <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M6 15L12 9L18 15" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                <button class="button-expand ${list.expanded === false ? 'down' : 'up'}">
+                    ${headerIcon}
                 </button>
                 <p class="list-title">${list.name}</p>
             </div>
@@ -493,6 +535,7 @@ function loadLists() {
         
         const ul = document.createElement('ul')
         ul.classList.add('carousel-content')
+        ul.style.height = list.expanded === false ? '0rem' : '13rem'
 
         list.items.forEach(i => {
             const li = document.createElement('li')
@@ -616,9 +659,9 @@ function readImageAsDataUrl(file) {
 
 function addListInputListeners() {
     if (!nameListInput || !addListModal) {
-        nameInput = document.getElementById('name-list-input')
-        submitButton = document.querySelector('#add-list-modal-container #submit')
-        closeButton = document.getElementById('#add-list-modal-container #close')    
+        nameListInput = document.getElementById('name-list-input')
+        submitListButton = document.querySelector('#add-list-modal-container #submit-list')
+        closeListButton = document.querySelector('#add-list-modal-container #close')    
         addListModal = document.getElementById('add-list-modal-container')
     }
 
@@ -628,7 +671,8 @@ function addListInputListeners() {
         }
     })
 
-    submitButton.addEventListener('click', (event) => {
+    submitListButton.addEventListener('click', (event) => {
+        debugger
         event.preventDefault()
         const name = nameInput?.value
 
@@ -671,7 +715,9 @@ function addItemInputListeners() {
         previewFavicon = document.getElementById('preview-favicon')
         previewItemName = document.getElementById('preview-item-name')
         expandButton = document.getElementById('preview-expand')
-    } 
+    }
+
+    console.log('1')
 
     nameInput.value = ''
     urlInput.value = ''
@@ -686,12 +732,15 @@ function addItemInputListeners() {
     showLogoInput.checked = true
 
     if (!submitButton) submitButton = document.getElementById('submit')
+    console.log('subsmit', submitButton)
     if (!closeButton) closeButton = document.getElementById('close')
     if (!modalContainer || !modalContainer || !modal) {
         backgroundModal = document.getElementById('background-modal')
         modalContainer = document.getElementById('add-modal-container')
         modal = document.getElementById('add-modal')
     }
+
+    console.log('2')
 
     // prevent close modal on click modal
     modal.addEventListener('click', (event) => {
@@ -709,85 +758,7 @@ function addItemInputListeners() {
         }
     })
 
-    expandButton.addEventListener('click', (event) => {
-        if (expandButton.classList.contains('expanded')) {
-            expandButton.setAttribute('title', 'Show preview')
-            expandButton.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M13.75 16.25C13.6515 16.2505 13.5538 16.2313 13.4628 16.1935C13.3718 16.1557 13.2893 16.1001 13.22 16.03L9.72001 12.53C9.57956 12.3894 9.50067 12.1988 9.50067 12C9.50067 11.8013 9.57956 11.6107 9.72001 11.47L13.22 8.00003C13.361 7.90864 13.5285 7.86722 13.6958 7.88241C13.8631 7.89759 14.0205 7.96851 14.1427 8.08379C14.2649 8.19907 14.3448 8.35203 14.3697 8.51817C14.3946 8.68431 14.363 8.85399 14.28 9.00003L11.28 12L14.28 15C14.4205 15.1407 14.4994 15.3313 14.4994 15.53C14.4994 15.7288 14.4205 15.9194 14.28 16.06C14.1353 16.1907 13.9448 16.259 13.75 16.25Z" fill="#000000"/>
-            </svg>`
-            expandButton.classList.remove('expanded')
-            previewItem.classList.add('hidden')
-        } else {
-            expandButton.setAttribute('title', 'Hide preview')
-            expandButton.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M10.25 16.25C10.1493 16.2466 10.0503 16.2227 9.95921 16.1797C9.86807 16.1367 9.78668 16.0756 9.72001 16C9.57956 15.8594 9.50067 15.6688 9.50067 15.47C9.50067 15.2713 9.57956 15.0806 9.72001 14.94L12.72 11.94L9.72001 8.94002C9.66069 8.79601 9.64767 8.63711 9.68277 8.48536C9.71786 8.33361 9.79933 8.19656 9.91586 8.09322C10.0324 7.98988 10.1782 7.92538 10.3331 7.90868C10.4879 7.89198 10.6441 7.92391 10.78 8.00002L14.28 11.5C14.4205 11.6407 14.4994 11.8313 14.4994 12.03C14.4994 12.2288 14.4205 12.4194 14.28 12.56L10.78 16C10.7133 16.0756 10.6319 16.1367 10.5408 16.1797C10.4497 16.2227 10.3507 16.2466 10.25 16.25Z" fill="#000000"/>
-            </svg>`
-            expandButton.classList.add('expanded')
-            previewItem.classList.remove('hidden')
-        }
-    })
-
-    backgroundColorInput.addEventListener('change', (event) => {
-        previewImage.style.display = 'block'
-        previewImage.style.backgroundColor = event.target.value
-    })
-
-    nameInput.addEventListener('change', (event) => {
-        previewItemName.innerText = event.target.value
-    })
-
-    logoInput.addEventListener('change', (event) => {
-        const input = event.target;
-        const selectedFile = input.files[0];
-        if (selectedFile) {
-            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-
-            if (!allowedExtensions.exec(selectedFile.name)) {
-                alert('Please select a valid PNG, JPG, or JPEG file.');
-                input.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                selectedLogo.src = event.target.result;
-
-                previewFavicon.style.display = 'block'
-                previewFavicon.src = event.target.result;
-            };
-
-            reader.readAsText(selectedFile);
-            reader.readAsDataURL(selectedFile);
-        }
-    })
-    
-    fileInput.addEventListener('change', (event) => {
-        const fileInput = event.target;
-        const selectedFile = fileInput.files[0];
-        if (selectedFile) {
-            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
-
-            if (!allowedExtensions.exec(selectedFile.name)) {
-                alert('Please select a valid PNG, JPG, or JPEG file.');
-                fileInput.value = '';
-                return;
-            }
-
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                selectedImage.src = event.target.result;
-
-                previewImage.style.display = 'block'
-                previewImage.src = event.target.result;
-            };
-
-            reader.readAsDataURL(selectedFile);
-        }
-    })
-    
-    submitButton.addEventListener('click', async (event) => {
+    const handleSubmitButton = (event) => {
         event.preventDefault()
         const name = nameInput?.value
         const url = urlInput?.value
@@ -800,6 +771,7 @@ function addItemInputListeners() {
         if (name && url && urlRegex.test(url)) {
             // create - add to list and load updated list
             // use currentId to update list saved on localhost
+            console.log('teste')
             const listItem = lists?.find(l => l.id === currentId)
             if (listItem) {
                 const items = listItem?.items
@@ -812,10 +784,15 @@ function addItemInputListeners() {
                     backgroundColor: bgColor,
                     backgroundImage: null,
                     showLogo: showLogo || false,
+                    expaded: true,
                 }
+                console.log(newItem)
                 
                 if (bgImage) {
-                    const imageDataUrl = await readImageAsDataUrl(bgImage)
+                    var imageDataUrl = null;
+                    readImageAsDataUrl(bgImage).then(res => {
+                        imageDataUrl = res
+                    })
                     newItem.backgroundImage 
 = imageDataUrl
                 }
@@ -845,7 +822,100 @@ function addItemInputListeners() {
             window.alert('Name and/or URL are not fulfilled')
             console.error('not create')            
         }
-    })
+    }
+
+    const handleExpandButton = (event) => {
+        if (expandButton.classList.contains('expanded')) {
+            expandButton.setAttribute('title', 'Show preview')
+            expandButton.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M13.75 16.25C13.6515 16.2505 13.5538 16.2313 13.4628 16.1935C13.3718 16.1557 13.2893 16.1001 13.22 16.03L9.72001 12.53C9.57956 12.3894 9.50067 12.1988 9.50067 12C9.50067 11.8013 9.57956 11.6107 9.72001 11.47L13.22 8.00003C13.361 7.90864 13.5285 7.86722 13.6958 7.88241C13.8631 7.89759 14.0205 7.96851 14.1427 8.08379C14.2649 8.19907 14.3448 8.35203 14.3697 8.51817C14.3946 8.68431 14.363 8.85399 14.28 9.00003L11.28 12L14.28 15C14.4205 15.1407 14.4994 15.3313 14.4994 15.53C14.4994 15.7288 14.4205 15.9194 14.28 16.06C14.1353 16.1907 13.9448 16.259 13.75 16.25Z" fill="#000000"/>
+            </svg>`
+            expandButton.classList.remove('expanded')
+            previewItem.classList.add('hidden')
+        } else {
+            expandButton.setAttribute('title', 'Hide preview')
+            expandButton.innerHTML = `<svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.25 16.25C10.1493 16.2466 10.0503 16.2227 9.95921 16.1797C9.86807 16.1367 9.78668 16.0756 9.72001 16C9.57956 15.8594 9.50067 15.6688 9.50067 15.47C9.50067 15.2713 9.57956 15.0806 9.72001 14.94L12.72 11.94L9.72001 8.94002C9.66069 8.79601 9.64767 8.63711 9.68277 8.48536C9.71786 8.33361 9.79933 8.19656 9.91586 8.09322C10.0324 7.98988 10.1782 7.92538 10.3331 7.90868C10.4879 7.89198 10.6441 7.92391 10.78 8.00002L14.28 11.5C14.4205 11.6407 14.4994 11.8313 14.4994 12.03C14.4994 12.2288 14.4205 12.4194 14.28 12.56L10.78 16C10.7133 16.0756 10.6319 16.1367 10.5408 16.1797C10.4497 16.2227 10.3507 16.2466 10.25 16.25Z" fill="#000000"/>
+            </svg>`
+            expandButton.classList.add('expanded')
+            previewItem.classList.remove('hidden')
+        }
+    }
+
+    const handleBgColorChange = (event) => {
+        previewImage.style.display = 'block'
+        previewImage.style.backgroundColor = event.target.value
+    }
+
+    const handleNameChange = (event) => {
+        previewItemName.innerText = event.target.value
+    }
+
+    const handleLogoChange = (event) => {
+        const input = event.target;
+        const selectedFile = input.files[0];
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                input.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedLogo.src = event.target.result;
+
+                previewFavicon.style.display = 'block'
+                previewFavicon.src = event.target.result;
+            };
+
+            reader.readAsText(selectedFile);
+            // reader.readAsDataURL(selectedFile);
+        }
+    }
+
+    const handleFileChange = (event) => {
+        const fileInput = event.target;
+        const selectedFile = fileInput.files[0];
+        if (selectedFile) {
+            const allowedExtensions = /(\.png|\.jpg|\.jpeg)$/i;
+
+            if (!allowedExtensions.exec(selectedFile.name)) {
+                alert('Please select a valid PNG, JPG, or JPEG file.');
+                fileInput.value = '';
+                return;
+            }
+
+            const reader = new FileReader();
+
+            reader.onload = function(event) {
+                selectedImage.src = event.target.result;
+
+                previewImage.style.display = 'block'
+                previewImage.src = event.target.result;
+            };
+
+            reader.readAsDataURL(selectedFile);
+        }
+    }
+
+    submitButton.removeEventListener('click', handleSubmitButton)
+    expandButton.removeEventListener('click', handleExpandButton)
+    backgroundColorInput.removeEventListener('change', handleBgColorChange)
+    nameInput.removeEventListener('change', handleNameChange)
+    logoInput.removeEventListener('change', handleLogoChange)
+    fileInput.removeEventListener('change', handleFileChange)
+
+    expandButton.addEventListener('click', handleExpandButton)
+    backgroundColorInput.addEventListener('change', handleBgColorChange)
+    nameInput.addEventListener('change', handleNameChange)
+    logoInput.addEventListener('change', handleLogoChange)
+    fileInput.addEventListener('change', handleFileChange)
+    console.log('addevent')
+    submitButton.addEventListener('click', handleSubmitButton)
 }
 
 function listOnClick() {
