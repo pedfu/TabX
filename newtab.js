@@ -112,7 +112,7 @@ const example = [{
  }]
 
 
-if (!localStorage.getItem('lists')) {
+ if (!localStorage.getItem('lists')) {
     localStorage.setItem('lists', JSON.stringify(example))
 }
 var lists = JSON.parse(localStorage.getItem('lists'))
@@ -666,9 +666,12 @@ function addListInputListeners() {
     })
 
     submitListButton.addEventListener('click', (event) => {
-        debugger
         event.preventDefault()
-        const name = nameInput?.value
+        const name = nameListInput?.value
+        if (!name || !name.trim()) {
+            alert('You cannot create a list without name')
+            return
+        }
 
         const sortedList = lists.sort((a, b) => a.id - b.id)
         var id = 1;
@@ -687,7 +690,7 @@ function addListInputListeners() {
         lists = [...sortedList, newItem]
         localStorage.setItem('lists', JSON.stringify([...sortedList, newItem]))
         addListModal.classList.add('hidden')
-        nameInput.value = ''
+        nameListInput.value = ''
         loadLists() // add list to screen instead of reloading all
         listOnClick()
     })
@@ -711,8 +714,6 @@ function addItemInputListeners() {
         expandButton = document.getElementById('preview-expand')
     }
 
-    console.log('1')
-
     nameInput.value = ''
     urlInput.value = ''
     logoInput.value = ''
@@ -726,7 +727,6 @@ function addItemInputListeners() {
     showLogoInput.checked = true
 
     if (!submitButton) submitButton = document.getElementById('submit')
-    console.log('subsmit', submitButton)
     if (!closeButton) closeButton = document.getElementById('close')
     if (!modalContainer || !modalContainer || !modal) {
         backgroundModal = document.getElementById('background-modal')
@@ -734,12 +734,11 @@ function addItemInputListeners() {
         modal = document.getElementById('add-modal')
     }
 
-    console.log('2')
-
     // prevent close modal on click modal
     modal.addEventListener('click', (event) => {
         event.stopPropagation()
     })
+
     backgroundModal.addEventListener('click', (event) => {
         modalContainer.classList.add('hidden')
     })
@@ -765,7 +764,6 @@ function addItemInputListeners() {
         if (name && url && urlRegex.test(url)) {
             // create - add to list and load updated list
             // use currentId to update list saved on localhost
-            console.log('teste')
             const listItem = lists?.find(l => l.id === currentId)
             if (listItem) {
                 const items = listItem?.items
@@ -773,14 +771,13 @@ function addItemInputListeners() {
                 const newItem = {
                     id: id, 
                     name: name,
-                    logo: logoImage,
+                    logo: null,
                     url: url,
                     backgroundColor: bgColor,
                     backgroundImage: null,
                     showLogo: showLogo || false,
                     expaded: true,
                 }
-                console.log(newItem)
                 
                 if (bgImage) {
                     var imageDataUrl = null;
@@ -788,6 +785,15 @@ function addItemInputListeners() {
                         imageDataUrl = res
                     })
                     newItem.backgroundImage 
+= imageDataUrl
+                }
+                if (logoImage) {
+                    debugger;
+                    var imageDataUrl = null;
+                    readImageAsDataUrl(logoImage).then(res => {
+                        imageDataUrl = res
+                    })
+                    newItem.logo 
 = imageDataUrl
                 }
                 
@@ -813,8 +819,7 @@ function addItemInputListeners() {
                 showLogoInput.checked = true
             }
         } else {
-            window.alert('Name and/or URL are not fulfilled')
-            console.error('not create')            
+            window.alert('Name and/or URL are not fulfilled')    
         }
     }
 
@@ -866,8 +871,8 @@ function addItemInputListeners() {
                 previewFavicon.src = event.target.result;
             };
 
-            reader.readAsText(selectedFile);
-            // reader.readAsDataURL(selectedFile);
+            // reader.readAsText(selectedFile);
+            reader.readAsDataURL(selectedFile);
         }
     }
 
@@ -908,7 +913,6 @@ function addItemInputListeners() {
     nameInput.addEventListener('change', handleNameChange)
     logoInput.addEventListener('change', handleLogoChange)
     fileInput.addEventListener('change', handleFileChange)
-    console.log('addevent')
     submitButton.addEventListener('click', handleSubmitButton)
 }
 
